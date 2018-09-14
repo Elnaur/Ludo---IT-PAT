@@ -67,7 +67,7 @@ const
   // Delphi's color hex codes are BGR, not RGB.
   // Something to do with how old Intel processors worked.
   clRed_board = $0000D4;
-  clDarkRed_board = $000055;
+  clDarkRed_board = $0000555;
 
   clYellow_board = $55DDFF;
   clDarkYellow_board = $0088AA;
@@ -204,8 +204,7 @@ begin
   for i := 1 to 4 do
   begin
     ListOfPlayers[i].currentIndex := StrToInt(line[i]);
-    ListOfPanels[1].Caption := ListOfPlayers[i].ListOfPossiblePlayerTypes
-      [ListOfPlayers[i].currentIndex];
+    ListOfPanels[1].Caption := ListOfPlayers[i].ListOfPossiblePlayerTypes[ListOfPlayers[i].currentIndex];
   end;
 
   {Player1TypeArray.currentIndex := StrToInt(line[1]);

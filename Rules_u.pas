@@ -33,23 +33,17 @@ end;
 procedure TFormRules.FormCreate(Sender: TObject);
 var
   RulesList: TextFile;
-  line: string;
+  Line: string;
 begin
   text := '';
-  if FileExists(GetCurrentDir + '/Media/Text/LudoRules.txt') then
-    begin
-      Assignfile(rulesList, GetCurrentDir + '/Media/Text/LudoRules.txt');
-      Reset(rulesList);
-      while not(Eof(RulesList)) do
-      begin
-        Readln(rulesList, line);
-        lblRulesListText.Caption := LblRulesListText.Caption + #13#10 + Line;
-      end;
-      CloseFile(rulesList);
-    end
-  else
-    ShowMessage('File ''LudoRules.txt'' does not exist.');
-
+  Assignfile(rulesList, GetCurrentDir + '/Media/Text/LudoRules.txt');
+  Reset(rulesList);
+  while not(Eof(RulesList)) do
+  begin
+    Readln(rulesList, line);
+    lblRulesListText.Caption := LblRulesListText.Caption + #13#10 + Line;
+  end;
+  CloseFile(rulesList);
 end;
 
 end.

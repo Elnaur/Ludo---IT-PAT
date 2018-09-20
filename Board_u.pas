@@ -122,24 +122,14 @@ type
   end;
 
 type
-  TPlayer = class
-  var
-    isActive : boolean;
-  const
-    tokenPath : string = '';
-  //procedure MoveForward;
+  Player = class
+    var
+      PlayerType : string;
   end;
 
 var
   FormBoard: TFormBoard;
-  lastRoll : integer;
-  ObjectIniCoordinates : array[1..89] of array[0..1] of integer;
-  // --> An array of co-ordinates of each board space image box object
-  // at initialisation of the form. Index if the main array is the number
-  // of the image object, and in the second array the first index is the
-  // left co-ordinates and the second the top.
-  currentPlayer : string;
-  PlayerList : array of string;
+  lastRoll: integer;
 
 const
   DiceList: array [1 .. 6] of string = ('Dice_1.png', 'Dice_2.png',
@@ -172,7 +162,7 @@ end;
 procedure TFormBoard.DiceRoll(Sender: TObject);
 var
   roll: integer;
-  current, finish, start: integer;
+  current, finish, start: extended;
 
 begin
   Randomize;
@@ -183,7 +173,7 @@ begin
 
   while current < finish do
   begin
-    roll := Random(6)+1; // including 1, excluding 7
+    roll := Random(6) + 1; // including 1, excluding 7
     imgDice.Picture.LoadFromFile
       (GetCurrentDir + '/Media/Dice images/' + DiceList[roll]);
     Update;

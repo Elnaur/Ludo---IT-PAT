@@ -40,12 +40,12 @@ type
     currentIndex: integer;
 
   const
-    ListOfPossiblePlayerTypes: array [0 .. 2] of string = ('None', 'Person',
+    ListOfPlayerTypes: array [0 .. 2] of string = ('None', 'Person',
       'Computer');
     // List of different player types
-    // 0: None: No player. A player typed 'None' will not be part of the game.
-    // 1: Person: A human player.
-    // 2: Computer: A computerised player that will not be controlled by a human, but by an algorithm.
+    // None: No player. A player typed 'None' will not be part of the game.
+    // Person: A human player.
+    // Computer: A computerised player that will not be controlled by a human, but by an algorithm.
 
     function nextInCycle(): string; // Cycles through the list in the panals
   end;
@@ -54,20 +54,19 @@ var
   FormMainMenu: TFormMainMenu;
   Player1TypeArray, Player2TypeArray, Player3TypeArray,
     Player4TypeArray: TPlayerTypeArray;
+
+  PlayerTypeSettings: TextFile;
   ListOfPlayers: array [1 .. 4] of TPlayerTypeArray;
   ListOfPanels: array [1 .. 4] of TPanel;
 
-  ListOfStartPlayers: array [1 .. 4] of string;
-
-  PlayerTypeSettings: TextFile;
   line: string;
 
 const
   // Custom colours used in the board.
   // Delphi's color hex codes are BGR, not RGB.
-  // Something to do with how old Intel processors worked.
+  // Something to do with how old intel processors worked.
   clRed_board = $0000D4;
-  clDarkRed_board = $0000555;
+  clDarkRed_board = $000055;
 
   clYellow_board = $55DDFF;
   clDarkYellow_board = $0088AA;
@@ -88,12 +87,12 @@ function TPlayerTypeArray.nextInCycle(): string;
 begin
   if currentIndex = 2 then
   begin
-    Result := ListOfPossiblePlayerTypes[0];
+    Result := ListOfPlayerTypes[0];
     currentIndex := 0;
   end
   else
   begin
-    Result := ListOfPossiblePlayerTypes[currentIndex + 1];
+    Result := ListOfPlayerTypes[currentIndex + 1];
     currentIndex := currentIndex + 1;
   end;
 end;
@@ -120,43 +119,33 @@ end;
 
 procedure TFormMainMenu.BtnExitClick(Sender: TObject); // Exits the game
 begin
-  try
-    begin
-      CloseFile(PlayerTypeSettings); // In case the file is still open
-    end;
-  finally
-    Application.Terminate;
-  end;
+  Application.Terminate;
+  CloseFile(PlayerTypeSettings);
 end;
 
 procedure TFormMainMenu.BtnPlayClick(Sender: TObject);
 var
   i: integer;
 begin
-  Rewrite(PlayerTypeSettings);
-
-  for i := 1 to 4 do
-  begin
-    Write(PlayerTypeSettings, IntToStr(ListOfPlayers[i].currentIndex));
-    case (ListOfPlayers[i].currentIndex) of
-      1:
-        ListOfStartPlayers[i] := 'Person';
-      2:
-        ListOfStartPlayers[i] := 'Computer';
-    else
-      ListOfStartPlayers[i] := 'None';
+  try
+    ReWrite(PlayerTypeSettings);
+    for i := 1 to 4 do
+    begin
+      Write(PlayerTypeSettings, ListOfPlayers[i].currentIndex);
     end;
-
+    CloseFile(PlayerTypeSettings);
+  except
+    on E: Exception do
+    begin
+      ShowMessage('Error writing settings to ''PlayerTypeSettings.txt''');
+    end
   end;
-  CloseFile(PlayerTypeSettings);
-
   FormMainMenu.Hide;
   FormRules.Hide;
   FormBoard.Show;
 end;
 
-procedure TFormMainMenu.BtnRulesClick(Sender: TObject);
-// Opens the rules from
+procedure TFormMainMenu.BtnRulesClick(Sender: TObject); // Opens the rules from
 begin
   FormRules.Show;
 end;
@@ -165,31 +154,35 @@ procedure TFormMainMenu.FormCreate(Sender: TObject);
 // Initialises TFormMainMenu
 var
   i: integer;
-  line : string;
+
 begin
   left := (Screen.Width div 2) - (FormMainMenu.Width div 2);
   top := (Screen.WorkAreaHeight div 2) - (FormMainMenu.Height div 2);
 
-  try
+  begin
+    if FileExists(GetCurrentDir + '\Media\Text\PlayerTypeSettings.txt') then
     begin
       AssignFile(PlayerTypeSettings,
-        GetCurrentDir + '/Media/Text/PlayerTypeSettings.txt');
+        GetCurrentDir + '\Media\Text\PlayerTypeSettings.txt');
+      FileMode := fmOpenReadWrite; // It throws Access Violations unless I put this here, although Read and Write mode is supposed to be the default.
       Reset(PlayerTypeSettings);
-      Readln(PlayerTypeSettings, line);
-    end;
-  except
-    on E: Exception do
-    // There's so many things that can go wrong, so instead of fifty
-    // if blocks and if FileExists there's just one try and except.
-    begin
-      line := '1200';
-    end;
+      readln(PlayerTypeSettings, line);
+    end
+    else
+      ShowMessage('File ''PlayerTypeSettings.txt'' does not exist');
   end;
 
-  Player1TypeArray.Create;
-  Player2TypeArray.Create;
-  Player3TypeArray.Create;
-  Player4TypeArray.Create;
+  PnlPlayer1.Color := clRed_board;
+  Player1TypeArray := TPlayerTypeArray.Create;
+
+  PnlPlayer2.Color := clYellow_board;
+  Player2TypeArray := TPlayerTypeArray.Create;
+
+  PnlPlayer3.Color := clBlue_board;
+  Player3TypeArray := TPlayerTypeArray.Create;
+
+  PnlPlayer4.Color := clGreen_board;
+  Player4TypeArray := TPlayerTypeArray.Create;
 
   ListOfPlayers[1] := Player1TypeArray;
   ListOfPlayers[2] := Player2TypeArray;
@@ -203,18 +196,17 @@ begin
 
   for i := 1 to 4 do
   begin
-    ListOfPlayers[i].currentIndex := StrToInt(line[i]);
-    ListOfPanels[1].Caption := ListOfPlayers[i].ListOfPossiblePlayerTypes[ListOfPlayers[i].currentIndex];
+    try
+      ListOfPlayers[i].currentIndex := StrToInt(line[i]);
+      ListOfPanels[i].Caption := ListOfPlayers[i].ListOfPlayerTypes
+        [ListOfPlayers[i].currentIndex];
+    except
+      on E: Exception do
+      begin
+        line := '1200';
+      end;
+    end;
   end;
-
-  {Player1TypeArray.currentIndex := StrToInt(line[1]);
-  PnlPlayer1.Caption := Player1TypeArray.ListOfPossiblePlayerTypes
-    [Player1TypeArray.currentIndex];}
-
-  PnlPlayer1.Color := clRed_board;
-  PnlPlayer2.Color := clYellow_board;
-  PnlPlayer3.Color := clBlue_board;
-  PnlPlayer4.Color := clGreen_board;
 
 end;
 

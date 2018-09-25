@@ -33,6 +33,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+
   end;
 
   TPlayerTypeArray = class // Class containing different player types to be chosen by the player
@@ -56,8 +57,10 @@ var
     Player4TypeArray: TPlayerTypeArray;
 
   PlayerTypeSettings: TextFile;
-  ListOfPlayers: array [1 .. 4] of TPlayerTypeArray;
+
+  ListOfPlayerTypeArrays: array [1 .. 4] of TPlayerTypeArray;
   ListOfPanels: array [1 .. 4] of TPanel;
+  ListOfActivePlayerTypes: array [1 .. 4] of string;
 
   line: string;
 
@@ -67,15 +70,19 @@ const
   // Something to do with how old intel processors worked.
   clRed_board = $0000D4;
   clDarkRed_board = $000055;
+  clLightRed_board = $D5D5FF;
 
   clYellow_board = $55DDFF;
   clDarkYellow_board = $0088AA;
+  clLightYellow_board = $D5F6FF;
 
   clBlue_board = $D4AA00;
   clDarkBlue_board = $554400;
+  clLightBlue_board = $FFF6D5;
 
   clGreen_board = $00D455;
   clDarkGreen_board = $008033;
+  clLightGreen_board = $D5FFE5;
 
 implementation
 
@@ -117,7 +124,8 @@ begin
   PnlPlayer4.Caption := Player4TypeArray.nextInCycle;
 end;
 
-procedure TFormMainMenu.BtnExitClick(Sender: TObject); // Exits the game
+procedure TFormMainMenu.BtnExitClick(Sender: TObject);
+// Exits the game
 begin
   Application.Terminate;
   CloseFile(PlayerTypeSettings);
@@ -127,22 +135,36 @@ procedure TFormMainMenu.BtnPlayClick(Sender: TObject);
 var
   i: integer;
 begin
-  try
-    ReWrite(PlayerTypeSettings);
-    for i := 1 to 4 do
-    begin
-      Write(PlayerTypeSettings, ListOfPlayers[i].currentIndex);
+  if not((Player1TypeArray.currentIndex = 0) and
+      (Player1TypeArray.currentIndex = 0) and
+      (Player1TypeArray.currentIndex = 0) and
+      (Player1TypeArray.currentIndex = 0)) then
+  begin
+    try
+      ReWrite(PlayerTypeSettings);
+      for i := 1 to 4 do
+      begin
+        Write(PlayerTypeSettings, ListOfPlayerTypeArrays[i].currentIndex);
+        ListOfActivePlayerTypes[i] := ListOfPlayerTypeArrays[i]
+          .ListOfPlayerTypes[ListOfPlayerTypeArrays[i].currentIndex];
+      end;
+      CloseFile(PlayerTypeSettings);
+    except
+      on E: Exception do
+      begin
+        ShowMessage('Error writing settings to ''PlayerTypeSettings.txt''');
+      end
     end;
-    CloseFile(PlayerTypeSettings);
-  except
-    on E: Exception do
-    begin
-      ShowMessage('Error writing settings to ''PlayerTypeSettings.txt''');
-    end
+
+    FormMainMenu.Hide;
+    FormRules.Hide;
+    FormBoard.Show;
+  end
+  else
+  begin
+    ShowMessage(
+      'All players cannot be non-existant or the game would be a little pointless.');
   end;
-  FormMainMenu.Hide;
-  FormRules.Hide;
-  FormBoard.Show;
 end;
 
 procedure TFormMainMenu.BtnRulesClick(Sender: TObject); // Opens the rules from
@@ -184,10 +206,10 @@ begin
   PnlPlayer4.Color := clGreen_board;
   Player4TypeArray := TPlayerTypeArray.Create;
 
-  ListOfPlayers[1] := Player1TypeArray;
-  ListOfPlayers[2] := Player2TypeArray;
-  ListOfPlayers[3] := Player3TypeArray;
-  ListOfPlayers[4] := Player4TypeArray;
+  ListOfPlayerTypeArrays[1] := Player1TypeArray;
+  ListOfPlayerTypeArrays[2] := Player2TypeArray;
+  ListOfPlayerTypeArrays[3] := Player3TypeArray;
+  ListOfPlayerTypeArrays[4] := Player4TypeArray;
 
   ListOfPanels[1] := PnlPlayer1;
   ListOfPanels[2] := PnlPlayer2;
@@ -197,9 +219,9 @@ begin
   for i := 1 to 4 do
   begin
     try
-      ListOfPlayers[i].currentIndex := StrToInt(line[i]);
-      ListOfPanels[i].Caption := ListOfPlayers[i].ListOfPlayerTypes
-        [ListOfPlayers[i].currentIndex];
+      ListOfPlayerTypeArrays[i].currentIndex := StrToInt(line[i]);
+      ListOfPanels[i].Caption := ListOfPlayerTypeArrays[i].ListOfPlayerTypes
+        [ListOfPlayerTypeArrays[i].currentIndex];
     except
       on E: Exception do
       begin

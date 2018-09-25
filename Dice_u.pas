@@ -2,63 +2,51 @@ unit Dice_u;
 
 interface
 
-uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtDlgs, StdCtrls, Math, ExtCtrls, JPEG, pngimage;
-
-type
-  TForm1 = class(TForm)
-    BtnRollDice: TButton;
-    LblDisplayRoll: TLabel;
-    ImgDice: TImage;
-    procedure FormCreate(Sender: TObject);
-    procedure BtnRollDiceClick(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
-  end;
-
-var
-  Form1: TForm1;
-
-const
-  DiceResult: array [1 .. 6] of string = ('1_Dice.jpg', '2_Dice.jpg',
-    '3_Dice.jpg', '4_Dice.jpg', '5_Dice.jpg', '6_Dice.jpg');
+function ResultOfDiceRoll(): integer;
+procedure ShuffleDice();
 
 implementation
 
-{$R *.dfm}
+uses Board_u, Sysutils;
 
-procedure TForm1.BtnRollDiceClick(Sender: TObject);
 var
-  diceRoll: integer;
-  current, finish, start: extended;
+  lastRoll: integer;
 
+function ResultOfDiceRoll(): integer;
 begin
-  LblDisplayRoll.Caption := '';
+  Result := lastRoll;
+end;
 
+procedure ShuffleDice;
+var
+  roll: integer;
+  previousRoll: integer;
+  current, finish, start: real;
+begin
+  Randomize;
   finish := 1000;
   start := 0;
   current := start;
+  previousRoll := 7;
 
+  FormBoard.imgDice.Visible := True;
   while current < finish do
   begin
-    diceRoll := RandomRange(1, 7); // including 1, excluding 7
-    ImgDice.Picture.LoadFromFile(GetCurrentDir + '/Pictures/' + DiceResult
-        [diceRoll]);
-    Update;
-    Sleep(100);
-    current := 100 + current;
+    roll := Random(6) + 1;
+    if roll <> previousRoll then
+    begin
+      // including 1, excluding 7
+      FormBoard.imgDice.Picture.LoadFromFile
+        (GetCurrentDir + '/Media/Dice images/' + ListOfDiceImages[roll]);
+      FormBoard.Update;
+      Sleep(100);
+      current := 100 + current;
+    end;
+  previousRoll := roll;
   end;
-  LblDisplayRoll.Caption := IntToStr(diceRoll);
-
-end;
-
-procedure TForm1.FormCreate(Sender: TObject);
-begin
-  Randomize;
-  ImgDice.Picture := nil;
+  lastRoll := roll;
+  Sleep(850);
+  FormBoard.imgDice.Visible := False;
 end;
 
 end.

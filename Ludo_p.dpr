@@ -5,7 +5,9 @@ uses
   MainMenu_u in 'MainMenu_u.pas' {FormMainMenu},
   Rules_u in 'Rules_u.pas' {FormRules},
   Board_u in 'Board_u.pas' {FormBoard},
-  AskToExitBoard_u in 'AskToExitBoard_u.pas' {FormAskToExitBoard};
+  AskToExitBoard_u in 'AskToExitBoard_u.pas' {FormAskToExitBoard},
+  TPlayerUnit_u in 'TPlayerUnit_u.pas',
+  DiceRoll_u in 'DiceRoll_u.pas';
 
 {$R *.res}
 

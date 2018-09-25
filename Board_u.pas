@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, pngimage, jpeg;
+  Dialogs, StdCtrls, ExtCtrls, pngimage, jpeg, TPlayerUnit_u, Dice_u;
 
 type
   TFormBoard = class(TForm)
@@ -13,6 +13,8 @@ type
     pnlLeft: TPanel;
     pnlBoard: TPanel;
     imgBoard: TImage;
+
+    // Game track spaces
     imgBoardSpace_1: TImage;
     imgBoardSpace_2: TImage;
     imgBoardSpace_3: TImage;
@@ -65,80 +67,103 @@ type
     imgBoardSpace_51: TImage;
     imgBoardSpace_52: TImage;
     imgBoardSpace_53: TImage;
-    imgBoardSpace_54: TImage;
-    imgBoardSpace_55: TImage;
-    imgBoardSpace_56: TImage;
-    imgBoardSpace_57: TImage;
-    imgBoardSpace_58: TImage;
-    imgBoardSpace_59: TImage;
-    imgBoardSpace_60: TImage;
-    imgBoardSpace_61: TImage;
-    imgBoardSpace_62: TImage;
-    imgBoardSpace_63: TImage;
-    imgBoardSpace_64: TImage;
-    imgboardSpace_65: TImage;
-    imgBoardSpace_66: TImage;
-    imgBoardSpace_67: TImage;
-    imgBoardSpace_68: TImage;
 
-    imgBoardSpace_73: TImage;
-    imgBoardSpace_72: TImage;
-    imgBoardSpace_71: TImage;
-    imgBoardSpace_70: TImage;
-    imgBoardSpace_69: TImage;
-    imgBoardSpace_74: TImage;
-    imgBoardSpace_75: TImage;
-    imgBoardSpace_77: TImage;
-    imgBoardSpace_76: TImage;
-    imgBoardSpace_79: TImage;
-    imgBoardSpace_81: TImage;
-    imgBoardSpace_80: TImage;
-    imgBoardSpace_78: TImage;
-    imgBoardSpace_82: TImage;
-    imgBoardSpace_83: TImage;
-    imgBoardSpace_84: TImage;
-    imgBoardSpace_85: TImage;
-    imgBoardSpace_86: TImage;
-    imgBoardSpace_88: TImage;
-    imgBoardSpace_87: TImage;
-    imgBoardSpace_89: TImage;
+    // Home track spaces
+    imgBoardSpace_GreenHome1: TImage;
+    imgBoardSpace_GreenHome2: TImage;
+    imgBoardSpace_GreenHome3: TImage;
+    imgBoardSpace_GreenHome4: TImage;
+    imgBoardSpace_GreenHome5: TImage;
+
+    imgBoardSpace_YellowHome1: TImage;
+    imgBoardSpace_YellowHome2: TImage;
+    imgBoardSpace_YellowHome3: TImage;
+    imgBoardSpace_YellowHome4: TImage;
+    imgBoardSpace_YellowHome5: TImage;
+
+    imgBoardSpace_RedHome1: TImage;
+    imgBoardSpace_RedHome2: TImage;
+    imgBoardSpace_RedHome3: TImage;
+    imgBoardSpace_RedHome4: TImage;
+    imgBoardSpace_RedHome5: TImage;
+
+    imgBoardSpace_BlueHome1: TImage;
+    imgBoardSpace_BlueHome2: TImage;
+    imgBoardSpace_BlueHome3: TImage;
+    imgBoardSpace_BlueHome4: TImage;
+    imgBoardSpace_BlueHome5: TImage;
+
+    // Yard spaces
+    imgBoardSpace_GreenTopLeft: TImage;
+    imgBoardSpace_GreenTopRight: TImage;
+    imgBoardSpace_GreenBottomLeft: TImage;
+    imgBoardSpace_GreenBottomRight: TImage;
+
+    imgBoardSpace_YellowTopLeft: TImage;
+    imgBoardSpace_YellowTopRight: TImage;
+    imgBoardSpace_YellowBottomLeft: TImage;
+    imgBoardSpace_YellowBottomRight: TImage;
+
+    imgBoardSpace_RedTopLeft: TImage;
+    imgBoardSpace_RedTopRight: TImage;
+    imgBoardSpace_RedBottomLeft: TImage;
+    imgBoardSpace_RedBottomRight: TImage;
+
+    imgBoardSpace_BlueTopLeft: TImage;
+    imgBoardSpace_BlueBottomLeft: TImage;
+    imgBoardSpace_BlueTopRight: TImage;
+    imgBoardSpace_BlueBottomRight: TImage;
+
     pnlPlayer1: TPanel;
     pnlPlayer2: TPanel;
     pnlPlayer3: TPanel;
-    pnlPlayer4: TPanel;
     pnlPlayer1RollDice: TPanel;
     pnlPlayer2RollDice: TPanel;
     pnlPlayer3RollDice: TPanel;
-    pnlPlayer4RollDice: TPanel;
     imgDice: TImage;
     lblDiceResult: TLabel;
+    pnlPlayer4: TPanel;
+    pnlPlayer4RollDice: TPanel;
+    pnlPlayer1Heading: TPanel;
+    pnlPlayer2Heading: TPanel;
+    pnlPlayer3Heading: TPanel;
+    pnlPlayer4Heading: TPanel;
     procedure BtnExitBoardClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure DiceRoll(Sender: TObject);
+    procedure ActiveDiceButtonClick(Sender: TObject);
+    procedure SelectedTokenToMove(Sender: TObject);
+    procedure CalculateSpacesTokensMayMoveTo();
+    procedure PlayGame;
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+
   end;
 
 type
-  Player = class
-    var
-      PlayerType : string;
-  end;
+  TImageArray = array of TImage;
 
 var
   FormBoard: TFormBoard;
   lastRoll: integer;
+  GameOver: boolean;
+  WaitingForButtonPress: boolean;
+  CurrentPlayerIndex: integer;
+  CurrentSelectedToken: TImage;
+
+  Player1Red, Player2Yellow, Player3Blue, Player4Green: TPlayerUnit_u.TPlayer;
+  // TPlayer is definied in the unit TPlayerUnit_u
+
+  ListOfActivePlayers: array of TPlayer;
 
 const
-  DiceList: array [1 .. 6] of string = ('Dice_1.png', 'Dice_2.png',
+  ListOfDiceImages: array [1 .. 6] of string = ('Dice_1.png', 'Dice_2.png',
     'Dice_3.png', 'Dice_4.png', 'Dice_5.png', 'Dice_6.png');
 
 implementation
 
-uses
-  MainMenu_u, AskToExitBoard_u;
+uses MainMenu_u, AskToExitBoard_u;
 {$R *.dfm}
 
 procedure TFormBoard.BtnExitBoardClick(Sender: TObject);
@@ -146,44 +171,132 @@ begin
   FormAskToExitBoard.Show;
 end;
 
-procedure TFormBoard.FormCreate(Sender: TObject);
+procedure TFormBoard.FormShow(Sender: TObject);
+var
+  i, j, k: integer;
 begin
-  // Colours defined in MainMenu_u
-  pnlPlayer1RollDice.color := clRed_board;
-  pnlPlayer2RollDice.color := clYellow_board;
-  pnlPlayer3RollDice.color := clBlue_board;
-  pnlPlayer4RollDice.color := clGreen_board;
-
   left := (Screen.Width div 2) - (FormBoard.Width div 2);
   top := (Screen.WorkAreaHeight div 2) - (FormBoard.Height div 2);
+
+  // Initialise the players using ListOfActivePlayers from MainMenu_u
+
+  for i := 1 to 4 do
+  begin
+    if ListOfActivePlayerTypes[i] <> 'None' then
+    begin
+      // Do stuff
+    end;
+  end;
+
+  // These four if statements are really bad code, I know, but it's the easiest way to do it.
+  if ListOfActivePlayerTypes[1] <> 'None' then
+  begin
+    Player1Red := TPlayer.Create(1);
+    SetLength(ListOfActivePlayers, length(ListOfActivePlayers) + 1);
+    ListOfActivePlayers[ high(ListOfActivePlayers)] := Player1Red;
+  end;
+
+  if ListOfActivePlayerTypes[2] <> 'None' then
+  begin
+    Player2Yellow := TPlayer.Create(2);
+    SetLength(ListOfActivePlayers, length(ListOfActivePlayers) + 1);
+    ListOfActivePlayers[ high(ListOfActivePlayers)] := Player2Yellow;
+  end;
+
+  if ListOfActivePlayerTypes[3] <> 'None' then
+  begin
+    Player3Blue := TPlayer.Create(3);
+    SetLength(ListOfActivePlayers, length(ListOfActivePlayers) + 1);
+    ListOfActivePlayers[ high(ListOfActivePlayers)] := Player3Blue;
+  end;
+
+  if ListOfActivePlayerTypes[4] <> 'None' then
+  begin
+    Player4Green := TPlayer.Create(4);
+    SetLength(ListOfActivePlayers, length(ListOfActivePlayers) + 1);
+    ListOfActivePlayers[ high(ListOfActivePlayers)] := Player4Green;
+  end;
+
+  for i := low(ListOfActivePlayers) to high(ListOfActivePlayers) do
+  begin
+    for j := low(ListOfActivePlayers[i].ListOfYardSpaces) to high
+      (ListOfActivePlayers[i].ListOfYardSpaces) do
+    begin
+      ListOfActivePlayers[i].ListOfYardSpaces[j].Picture.LoadFromFile
+        (ListOfActivePlayers[i].tokenPath);
+      // for k := 1 to 4 do
+      // begin
+      ListOfActivePlayers[i].ListOfTokenPositions[j] := ListOfActivePlayers[i]
+        .ListOfYardSpaces[j];
+      // end;
+    end;
+
+    PlayGame;
+
+  end;
 end;
 
 // Dice:
-procedure TFormBoard.DiceRoll(Sender: TObject);
+procedure TFormBoard.PlayGame();
 var
-  roll: integer;
-  current, finish, start: extended;
-
+  i: integer;
 begin
-  Randomize;
-  finish := 1000;
-  start := 0;
-  current := start;
-  imgDice.Visible := True;
+  GameOver := False;
+  CurrentPlayerIndex := 0;
+  ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
+end;
 
-  while current < finish do
+procedure TFormBoard.ActiveDiceButtonClick(Sender: TObject);
+begin
+  ShuffleDice;
+  lastRoll := ResultOfDiceRoll();
+  lblDiceResult.Caption := IntToStr(lastRoll);
+  ListOfActivePlayers[CurrentPlayerIndex].FinishDiceRoll();
+
+  ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn();
+end;
+
+procedure TFormBoard.SelectedTokenToMove(Sender: TObject);
+var
+  ImageSender: TImage;
+  i: TImage;
+begin
+  ImageSender := Sender as TImage;
+  for i in ListOfActivePlayers[CurrentPlayerIndex].ListOfTokenPositions do
   begin
-    roll := Random(6) + 1; // including 1, excluding 7
-    imgDice.Picture.LoadFromFile
-      (GetCurrentDir + '/Media/Dice images/' + DiceList[roll]);
-    Update;
-    Sleep(100);
-    lblDiceResult.Caption := IntToStr(roll);
-    current := 100 + current;
+    if i = ImageSender then
+      CurrentSelectedToken := ImageSender;
   end;
-  lastRoll := roll;
-  Sleep(750);
-  imgDice.Visible := False;
+end;
+
+procedure TFormBoard.CalculateSpacesTokensMayMoveTo();
+var
+  i, j: TImage;
+  isInYard, isInHome, isInBoard: boolean;
+begin
+  for i in ListOfActivePlayers[CurrentPlayerIndex].ListOfTokenPositions do
+  begin
+
+    for j in ListOfActivePlayers[CurrentPlayerIndex].ListOfYardSpaces do
+    begin
+      if j = i then
+      begin
+        isInYard = True;
+      end;
+    end;
+
+    for j in ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces do
+    begin
+      if j = i then
+      begin
+        isInHome = True;
+      end;
+    end;
+
+    if not(isInHome or isInYard) then
+      isInBoard = True;
+
+  end;
 end;
 
 end.

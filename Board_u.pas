@@ -226,7 +226,7 @@ begin
         (ListOfActivePlayers[i].tokenPath);
       // for k := 1 to 4 do
       // begin
-      ListOfActivePlayers[i].ListOfTokenPositions[j] := ListOfActivePlayers[i]
+      ListOfActivePlayers[i].ListOfTokens[j].Position := ListOfActivePlayers[i]
         .ListOfYardSpaces[j];
       // end;
     end;
@@ -259,12 +259,13 @@ end;
 procedure TFormBoard.SelectedTokenToMove(Sender: TObject);
 var
   ImageSender: TImage;
-  i: TImage;
+  j: integer;
 begin
   ImageSender := Sender as TImage;
-  for i in ListOfActivePlayers[CurrentPlayerIndex].ListOfTokenPositions do
+  for j := 0 to 3 do
   begin
-    if i = ImageSender then
+    if ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens[j]
+      .Position = ImageSender then
       CurrentSelectedToken := ImageSender;
   end;
 end;
@@ -274,29 +275,7 @@ var
   i, j: TImage;
   isInYard, isInHome, isInBoard: boolean;
 begin
-  for i in ListOfActivePlayers[CurrentPlayerIndex].ListOfTokenPositions do
-  begin
-
-    for j in ListOfActivePlayers[CurrentPlayerIndex].ListOfYardSpaces do
-    begin
-      if j = i then
-      begin
-        isInYard = True;
-      end;
-    end;
-
-    for j in ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces do
-    begin
-      if j = i then
-      begin
-        isInHome = True;
-      end;
-    end;
-
-    if not(isInHome or isInYard) then
-      isInBoard = True;
-
-  end;
+  //k
 end;
 
 end.

@@ -29,7 +29,7 @@ type
     GreenToken1, GreenToken2, GreenToken3, GreenToken4: TToken;
 
     playerType: string;
-    ListOfTokenPositions: array [0 .. 3] of TToken;
+    ListOfTokens: array [0 .. 3] of TToken;
     StartSpace: TImage;
     ListOfYardSpaces, ListOfHomeSpaces: TImageArray;
     PanelDice: TPanel;
@@ -190,6 +190,11 @@ begin
     CurrentPlayerIndex := Low(ListOfActivePlayers);
 
   ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
+end;
+
+procedure TPlayer.TToken.MoveForward(numberOfSpaces: integer);
+begin
+  //k
 end;
 
 end.

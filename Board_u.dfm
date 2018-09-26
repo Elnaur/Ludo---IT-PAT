@@ -2,7 +2,7 @@ object FormBoard: TFormBoard
   Left = 313
   Top = 89
   Caption = 'Ludo'
-  ClientHeight = 698
+  ClientHeight = 699
   ClientWidth = 1194
   Color = clBlack
   Constraints.MaxHeight = 737
@@ -666,7 +666,7 @@ object FormBoard: TFormBoard
     Left = 3
     Top = 3
     Width = 225
-    Height = 692
+    Height = 693
     Align = alLeft
     Color = clSilver
     Ctl3D = True
@@ -675,7 +675,7 @@ object FormBoard: TFormBoard
     TabOrder = 2
     DesignSize = (
       225
-      692)
+      693)
     object pnlPlayer1: TPanel
       Left = 8
       Top = 8
@@ -719,7 +719,7 @@ object FormBoard: TFormBoard
     end
     object pnlPlayer2: TPanel
       Left = 8
-      Top = 347
+      Top = 348
       Width = 209
       Height = 333
       Anchors = [akLeft]
@@ -764,14 +764,14 @@ object FormBoard: TFormBoard
     Left = 966
     Top = 3
     Width = 225
-    Height = 692
+    Height = 693
     Align = alRight
     Color = clSilver
     ParentBackground = False
     TabOrder = 1
     DesignSize = (
       225
-      692)
+      693)
     object pnlPlayer3: TPanel
       Left = 7
       Top = 8
@@ -815,7 +815,7 @@ object FormBoard: TFormBoard
     end
     object pnlPlayer4: TPanel
       Left = 8
-      Top = 347
+      Top = 348
       Width = 209
       Height = 333
       Anchors = [akLeft]
@@ -860,19 +860,19 @@ object FormBoard: TFormBoard
     Left = 234
     Top = 3
     Width = 726
-    Height = 692
+    Height = 693
     Align = alClient
     Color = clCream
     ParentBackground = False
     TabOrder = 3
     DesignSize = (
       726
-      692)
+      693)
     object imgBoard: TImage
       Left = 1
       Top = 1
       Width = 724
-      Height = 690
+      Height = 691
       Align = alClient
       Anchors = []
       Center = True
@@ -2759,6 +2759,7 @@ object FormBoard: TFormBoard
         F63CACF5D17FDF354E78F539DCBC45191F9930FF6D67BF7BD45A15942A15ED77
         E250DAEBFAF4FF0FECEB313A310D5C610000000049454E44AE426082}
       ExplicitWidth = 675
+      ExplicitHeight = 690
     end
     object imgBoardSpace_8: TImage
       Left = 296
@@ -3428,15 +3429,16 @@ object FormBoard: TFormBoard
       Left = 305
       Top = 285
       Width = 120
-      Height = 120
+      Height = 121
       Align = alCustom
       Anchors = [akLeft, akTop, akRight, akBottom]
       Center = True
+      ExplicitHeight = 120
     end
   end
   object BtnExitBoard: TButton
     Left = 862
-    Top = 660
+    Top = 661
     Width = 90
     Height = 30
     Align = alCustom

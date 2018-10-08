@@ -9,24 +9,22 @@ type
   TImageArray = array of TImage;
 
 type
+  TToken = class
+    position: TImage;
+
+    isSelected: boolean;
+    isinHome: boolean;
+    isInYard: boolean;
+    isInBoard: boolean;
+
+    procedure MoveForward(numberOfSpaces: integer);
+  end;
+
+type
   TPlayer = class
-  type
-    TToken = class
-      position: TImage;
-
-      isSelected: boolean;
-      isinHome: boolean;
-      isInYard: boolean;
-      isInBoard: boolean;
-
-      procedure MoveForward(numberOfSpaces: integer);
-    end;
 
   var
-    RedToken1, RedToken2, RedToken3, RedToken4: TToken;
-    YellowToken1, YellowToken2, YellowToken3, YellowToken4: TToken;
-    BlueToken1, BlueToken2, BLueToken3, BlueToken4: TToken;
-    GreenToken1, GreenToken2, GreenToken3, GreenToken4: TToken;
+    Token1, Token2, Token3, Token4: TToken;
 
     playerType: string;
     ListOfTokens: array [0 .. 3] of TToken;
@@ -80,11 +78,6 @@ begin
 
         tokenPath := GetCurrentDir +
           '\Media\Token images\Red player 1 token.png';
-
-        RedToken1 := TToken.Create;
-        RedToken2 := TToken.Create;
-        RedToken3 := TToken.Create;
-        RedToken4 := TToken.Create;
       end;
 
     Yellow:
@@ -108,10 +101,6 @@ begin
         tokenPath := GetCurrentDir +
           '\Media\Token images\Yellow player 2 token.png';
 
-        YellowToken1 := TToken.Create;
-        YellowToken2 := TToken.Create;
-        YellowToken3 := TToken.Create;
-        YellowToken4 := TToken.Create;
       end;
 
     Blue:
@@ -135,10 +124,6 @@ begin
         tokenPath := GetCurrentDir +
           '\Media\Token images\Blue player 3 token.png';
 
-        BlueToken1 := TToken.Create;
-        BlueToken2 := TToken.Create;
-        BLueToken3 := TToken.Create;
-        BlueToken4 := TToken.Create;
       end;
 
     Green:
@@ -161,13 +146,17 @@ begin
         ActivePanelColor := clGreen_Board;
         tokenPath := GetCurrentDir +
           '\Media\Token images\Green player 4 token.png';
-
-        GreenToken1 := TToken.Create;
-        GreenToken2 := TToken.Create;
-        GreenToken3 := TToken.Create;
-        GreenToken4 := TToken.Create;
       end;
   end;
+  Token1 := TToken.Create;
+  Token2 := TToken.Create;
+  Token3 := TToken.Create;
+  Token4 := TToken.Create;
+
+  ListOfTokens[0] := Token1;
+  ListOfTokens[1] := Token2;
+  ListOfTokens[2] := Token3;
+  ListOfTokens[3] := Token4;
 end;
 
 procedure TPlayer.StartDiceRoll();
@@ -192,9 +181,9 @@ begin
   ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
 end;
 
-procedure TPlayer.TToken.MoveForward(numberOfSpaces: integer);
+procedure TToken.MoveForward(numberOfSpaces: integer);
 begin
-  //k
+  // place holder for code
 end;
 
 end.

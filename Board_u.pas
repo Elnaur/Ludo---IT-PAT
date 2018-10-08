@@ -171,9 +171,16 @@ begin
   FormAskToExitBoard.Show;
 end;
 
+procedure TFormBoard.PlayGame();
+begin
+  GameOver := False;
+  CurrentPlayerIndex := 0;
+  ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
+end;
+
 procedure TFormBoard.FormShow(Sender: TObject);
 var
-  i, j, k: integer;
+  i, j: integer;
 begin
   left := (Screen.Width div 2) - (FormBoard.Width div 2);
   top := (Screen.WorkAreaHeight div 2) - (FormBoard.Height div 2);
@@ -217,33 +224,17 @@ begin
     ListOfActivePlayers[ high(ListOfActivePlayers)] := Player4Green;
   end;
 
-  for i := low(ListOfActivePlayers) to high(ListOfActivePlayers) do
+  for i := 0 to high(ListOfActivePlayers) do
   begin
-    for j := low(ListOfActivePlayers[i].ListOfYardSpaces) to high
-      (ListOfActivePlayers[i].ListOfYardSpaces) do
+    for j := 0 to 3 do
     begin
       ListOfActivePlayers[i].ListOfYardSpaces[j].Picture.LoadFromFile
         (ListOfActivePlayers[i].tokenPath);
-      // for k := 1 to 4 do
-      // begin
       ListOfActivePlayers[i].ListOfTokens[j].Position := ListOfActivePlayers[i]
         .ListOfYardSpaces[j];
-      // end;
     end;
-
-    PlayGame;
-
   end;
-end;
-
-// Dice:
-procedure TFormBoard.PlayGame();
-var
-  i: integer;
-begin
-  GameOver := False;
-  CurrentPlayerIndex := 0;
-  ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
+  PlayGame;
 end;
 
 procedure TFormBoard.ActiveDiceButtonClick(Sender: TObject);
@@ -259,23 +250,20 @@ end;
 procedure TFormBoard.SelectedTokenToMove(Sender: TObject);
 var
   ImageSender: TImage;
-  j: integer;
+  i: integer;
 begin
   ImageSender := Sender as TImage;
-  for j := 0 to 3 do
+  for i := 0 to 3 do
   begin
-    if ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens[j]
+    if ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens[i]
       .Position = ImageSender then
       CurrentSelectedToken := ImageSender;
   end;
 end;
 
 procedure TFormBoard.CalculateSpacesTokensMayMoveTo();
-var
-  i, j: TImage;
-  isInYard, isInHome, isInBoard: boolean;
 begin
-  //k
+  // k
 end;
 
 end.

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, pngimage, jpeg, TPlayerUnit_u, Dice_u;
+  Dialogs, StdCtrls, ExtCtrls, pngimage, jpeg, PlayerUnit_u, Dice_u;
 
 type
   TFormBoard = class(TForm)
@@ -131,7 +131,6 @@ type
     procedure BtnExitBoardClick(Sender: TObject);
     procedure ActiveDiceButtonClick(Sender: TObject);
     procedure SelectedTokenToMove(Sender: TObject);
-    procedure CalculateSpacesTokensMayMoveTo();
     procedure PlayGame;
     procedure FormShow(Sender: TObject);
   private
@@ -152,8 +151,8 @@ var
   CurrentPlayerIndex: integer;
   CurrentSelectedToken: TImage;
 
-  Player1Red, Player2Yellow, Player3Blue, Player4Green: TPlayerUnit_u.TPlayer;
-  // TPlayer is definied in the unit TPlayerUnit_u
+  Player1Red, Player2Yellow, Player3Blue, Player4Green: PlayerUnit_u.TPlayer;
+  // TPlayer is definied in the unit PlayerUnit_u
 
   ListOfActivePlayers: array of TPlayer;
 
@@ -250,9 +249,5 @@ begin
   end;
 end;
 
-procedure TFormBoard.CalculateSpacesTokensMayMoveTo();
-begin
-  // k
-end;
 
 end.

@@ -3414,7 +3414,7 @@ object FormBoard: TFormBoard
       Left = 353
       Top = 332
       Width = 7
-      Height = 28
+      Height = 29
       Align = alCustom
       Anchors = [akLeft, akTop, akRight, akBottom]
       Font.Charset = DEFAULT_CHARSET
@@ -3423,7 +3423,6 @@ object FormBoard: TFormBoard
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitHeight = 29
     end
     object imgDice: TImage
       Left = 305

@@ -6,7 +6,7 @@ uses
   Rules_u in 'Rules_u.pas' {FormRules},
   Board_u in 'Board_u.pas' {FormBoard},
   AskToExitBoard_u in 'AskToExitBoard_u.pas' {FormAskToExitBoard},
-  TPlayerUnit_u in 'TPlayerUnit_u.pas',
+  PlayerUnit_u in 'PlayerUnit_u.pas',
   Dice_u in 'Dice_u.pas';
 
 {$R *.res}

@@ -55,7 +55,7 @@
 			<DCCReference Include="AskToExitBoard_u.pas">
 				<Form>FormAskToExitBoard</Form>
 			</DCCReference>
-			<DCCReference Include="TPlayerUnit_u.pas"/>
+			<DCCReference Include="PlayerUnit_u.pas"/>
 			<DCCReference Include="Dice_u.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>

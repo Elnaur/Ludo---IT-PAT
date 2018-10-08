@@ -185,16 +185,6 @@ begin
   left := (Screen.Width div 2) - (FormBoard.Width div 2);
   top := (Screen.WorkAreaHeight div 2) - (FormBoard.Height div 2);
 
-  // Initialise the players using ListOfActivePlayers from MainMenu_u
-
-  for i := 1 to 4 do
-  begin
-    if ListOfActivePlayerTypes[i] <> 'None' then
-    begin
-      // Do stuff
-    end;
-  end;
-
   // These four if statements are really bad code, I know, but it's the easiest way to do it.
   if ListOfActivePlayerTypes[1] <> 'None' then
   begin
@@ -243,7 +233,6 @@ begin
   lastRoll := ResultOfDiceRoll();
   lblDiceResult.Caption := IntToStr(lastRoll);
   ListOfActivePlayers[CurrentPlayerIndex].FinishDiceRoll();
-
   ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn();
 end;
 

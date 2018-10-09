@@ -186,7 +186,6 @@ begin
     begin
       AssignFile(PlayerTypeSettings,
         GetCurrentDir + '\Media\Text\PlayerTypeSettings.txt');
-      FileMode := fmOpenReadWrite; // It throws Access Violations unless I put this here, although Read and Write mode is supposed to be the default.
       Reset(PlayerTypeSettings);
       readln(PlayerTypeSettings, line);
     end

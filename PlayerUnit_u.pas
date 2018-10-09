@@ -10,14 +10,15 @@ type
 
 type
   TToken = class
-    position: TImage;
+    Position : TImage;
+    positionInBoardSpaceArray: integer;
 
     isSelected: boolean;
     isinHome: boolean;
     isInYard: boolean;
     isInBoard: boolean;
 
-    procedure MoveForward(numberOfSpaces: integer);
+    procedure Move(numberOfSpaces: integer);
   end;
 
 type
@@ -181,9 +182,13 @@ begin
   ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
 end;
 
-procedure TToken.MoveForward(numberOfSpaces: integer);
+procedure TToken.Move(numberOfSpaces: integer);
 begin
-  // place holder for code
+  if (numberOfSpaces = 6) and (isInYard = True) then
+    begin
+      positionInBoardSpaceArray = 0;
+      Position := ListOfActivePlayers[CurrentPlayerIndex].StartSpace;
+    end;
 end;
 
 end.

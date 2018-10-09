@@ -149,7 +149,9 @@ var
   GameOver: boolean;
   WaitingForButtonPress: boolean;
   CurrentPlayerIndex: integer;
-  CurrentSelectedToken: TImage;
+
+  CurrentSelectedImageSpace: TImage;
+  CurrentSelectedToken: TToken;
 
   Player1Red, Player2Yellow, Player3Blue, Player4Green: PlayerUnit_u.TPlayer;
   // TPlayer is definied in the unit PlayerUnit_u
@@ -245,9 +247,10 @@ begin
   begin
     if ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens[i]
       .Position = ImageSender then
-      CurrentSelectedToken := ImageSender;
+      CurrentSelectedImageSpace := ImageSender;
   end;
+  CurrentSelectedToken.Position := CurrentSelectedImageSpace;
+  CurrentSelectedToken.Move(lastRoll);
 end;
-
 
 end.

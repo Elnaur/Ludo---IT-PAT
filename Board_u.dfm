@@ -2765,504 +2765,504 @@ object FormBoard: TFormBoard
       Top = 412
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_7: TImage
       Left = 296
       Top = 459
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_6: TImage
       Left = 296
       Top = 506
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_5: TImage
       Left = 296
       Top = 553
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_4: TImage
       Left = 296
       Top = 600
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_3: TImage
       Left = 296
       Top = 647
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_2: TImage
       Left = 343
       Top = 647
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_1: TImage
       Left = 389
       Top = 647
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_53: TImage
       Left = 389
       Top = 600
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_52: TImage
       Left = 389
       Top = 553
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_51: TImage
       Left = 389
       Top = 506
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_50: TImage
       Left = 389
       Top = 459
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_49: TImage
       Left = 389
       Top = 412
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_48: TImage
       Left = 429
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_9: TImage
       Left = 257
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_10: TImage
       Left = 211
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_11: TImage
       Left = 166
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_12: TImage
       Left = 119
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_13: TImage
       Left = 74
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_14: TImage
       Left = 27
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_15: TImage
       Left = 27
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_16: TImage
       Left = 27
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_17: TImage
       Left = 74
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_18: TImage
       Left = 121
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_19: TImage
       Left = 166
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_20: TImage
       Left = 212
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_21: TImage
       Left = 259
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_22: TImage
       Left = 296
       Top = 238
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_23: TImage
       Left = 296
       Top = 191
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_24: TImage
       Left = 296
       Top = 144
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_25: TImage
       Left = 296
       Top = 98
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_26: TImage
       Left = 296
       Top = 51
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_27: TImage
       Left = 296
       Top = 4
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_28: TImage
       Left = 343
       Top = 4
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_29: TImage
       Left = 390
       Top = 4
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_30: TImage
       Left = 390
       Top = 51
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_31: TImage
       Left = 389
       Top = 98
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_32: TImage
       Left = 389
       Top = 144
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_33: TImage
       Left = 389
       Top = 191
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_34: TImage
       Left = 389
       Top = 238
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_35: TImage
       Left = 429
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_36: TImage
       Left = 473
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_37: TImage
       Left = 519
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_39: TImage
       Left = 564
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_40: TImage
       Left = 611
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_41: TImage
       Left = 658
       Top = 278
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_42: TImage
       Left = 658
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_43: TImage
       Left = 657
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_44: TImage
       Left = 610
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_45: TImage
       Left = 563
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_46: TImage
       Left = 516
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_47: TImage
       Left = 473
       Top = 372
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_GreenHome5: TImage
       Left = 342
       Top = 422
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_GreenHome4: TImage
       Left = 342
       Top = 467
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_GreenHome3: TImage
       Left = 342
       Top = 511
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_GreenHome2: TImage
       Left = 342
       Top = 555
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_GreenHome1: TImage
       Left = 343
       Top = 600
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_YellowHome5: TImage
       Left = 246
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_YellowHome4: TImage
       Left = 203
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_YellowHome3: TImage
       Left = 159
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_YellowHome2: TImage
       Left = 115
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_YellowHome1: TImage
       Left = 72
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_RedHome5: TImage
       Left = 342
       Top = 230
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_RedHome4: TImage
       Left = 343
       Top = 186
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_RedHome3: TImage
       Left = 342
       Top = 140
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_RedHome2: TImage
       Left = 342
       Top = 97
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_RedHome1: TImage
       Left = 342
       Top = 50
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_BlueHome5: TImage
       Left = 439
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_BlueHome4: TImage
       Left = 482
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_BlueHome3: TImage
       Left = 525
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_BlueHome2: TImage
       Left = 568
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_BlueHome1: TImage
       Left = 611
       Top = 325
       Width = 41
       Height = 41
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_GreenTopLeft: TImage
       Left = 502
@@ -3271,7 +3271,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_GreenTopRight: TImage
       Left = 590
@@ -3280,7 +3280,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_GreenBottomRight: TImage
       Left = 590
@@ -3289,7 +3289,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_GreenBottomLeft: TImage
       Left = 502
@@ -3298,7 +3298,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_YellowTopRight: TImage
       Left = 182
@@ -3307,7 +3307,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_YellowBottomRight: TImage
       Left = 182
@@ -3316,7 +3316,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_YellowBottomLeft: TImage
       Left = 92
@@ -3325,7 +3325,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_YellowTopLeft: TImage
       Left = 92
@@ -3334,7 +3334,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_RedTopLeft: TImage
       Left = 95
@@ -3343,7 +3343,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_RedTopRight: TImage
       Left = 186
@@ -3352,7 +3352,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_RedBottomLeft: TImage
       Left = 95
@@ -3361,7 +3361,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_RedBottomRight: TImage
       Left = 186
@@ -3370,7 +3370,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_BlueTopLeft: TImage
       Left = 501
@@ -3379,7 +3379,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_BlueBottomLeft: TImage
       Left = 501
@@ -3390,7 +3390,7 @@ object FormBoard: TFormBoard
       Center = True
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_BlueTopRight: TImage
       Left = 591
@@ -3399,7 +3399,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object imgBoardSpace_BlueBottomRight: TImage
       Left = 591
@@ -3408,7 +3408,7 @@ object FormBoard: TFormBoard
       Height = 41
       Proportional = True
       Stretch = True
-      OnClick = SelectedTokenToMove
+      OnClick = AssignSelectedToken
     end
     object lblDiceResult: TLabel
       Left = 353

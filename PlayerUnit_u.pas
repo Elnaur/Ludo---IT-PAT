@@ -10,7 +10,7 @@ type
 
 type
   TToken = class
-    Position : TImage;
+    Position: TImage;
     positionInBoardSpaceArray: integer;
 
     isSelected: boolean;
@@ -18,7 +18,9 @@ type
     isInYard: boolean;
     isInBoard: boolean;
 
-    procedure Move(numberOfSpaces: integer);
+    procedure MoveOutOfYard(rollThrown: integer);
+    // procedure MoveOnToHome(rollThrown: integer);
+    // procedure MoveForward(rollThrown: integer);
   end;
 
 type
@@ -182,13 +184,18 @@ begin
   ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
 end;
 
-procedure TToken.Move(numberOfSpaces: integer);
+procedure TToken.MoveOutOfYard(rollThrown: integer);
 begin
-  if (numberOfSpaces = 6) and (isInYard = True) then
-    begin
-      positionInBoardSpaceArray = 0;
-      Position := ListOfActivePlayers[CurrentPlayerIndex].StartSpace;
-    end;
+  if (rollThrown = 6) and (isInYard = True) then
+  begin
+    positionInBoardSpaceArray := 0;
+    CurrentSelectedToken.Position.Picture := Nil;
+    Position := ListOfActivePlayers[CurrentPlayerIndex].StartSpace;
+    CurrentSelectedToken.Position.Picture.LoadFromFile
+      (ListOfActivePlayers[CurrentPlayerIndex].tokenPath);
+
+    ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn();
+  end;
 end;
 
 end.

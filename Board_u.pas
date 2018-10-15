@@ -130,7 +130,8 @@ type
     pnlPlayer4Heading: TPanel;
     procedure BtnExitBoardClick(Sender: TObject);
     procedure ActiveDiceButtonClick(Sender: TObject);
-    procedure SelectedTokenToMove(Sender: TObject);
+    procedure AssignSelectedToken(Sender: TObject);
+    procedure PrepareTokenToMove;
     procedure PlayGame;
     procedure FormShow(Sender: TObject);
   private
@@ -234,23 +235,32 @@ begin
   lastRoll := ResultOfDiceRoll();
   lblDiceResult.Caption := IntToStr(lastRoll);
   ListOfActivePlayers[CurrentPlayerIndex].FinishDiceRoll();
-  ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn();
 end;
 
-procedure TFormBoard.SelectedTokenToMove(Sender: TObject);
+procedure TFormBoard.AssignSelectedToken(Sender: TObject);
 var
-  ImageSender: TImage;
   i: integer;
 begin
-  ImageSender := Sender as TImage;
+  CurrentSelectedImageSpace := Sender as TImage;
   for i := 0 to 3 do
   begin
-    if ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens[i]
-      .Position = ImageSender then
-      CurrentSelectedImageSpace := ImageSender;
+    if ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens[i].Position =
+      CurrentSelectedImageSpace then
+      CurrentSelectedToken := ListOfActivePlayers[CurrentPlayerIndex]
+        .ListOfTokens[i];
+    CurrentSelectedToken.Position := CurrentSelectedImageSpace;
   end;
-  CurrentSelectedToken.Position := CurrentSelectedImageSpace;
-  CurrentSelectedToken.Move(lastRoll);
+
+  PrepareTokenToMove;
+end;
+
+procedure TFormBoard.PrepareTokenToMove();
+begin
+  if (lastRoll = 6) and (CurrentSelectedToken.isInYard = True) then
+  begin
+    CurrentSelectedToken.MoveOutOfYard(lastRoll);
+  end;
+  ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn;
 end;
 
 end.

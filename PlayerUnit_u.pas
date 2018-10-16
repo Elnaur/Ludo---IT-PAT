@@ -41,8 +41,6 @@ type
     procedure StartDiceRoll();
     procedure FinishDiceRoll();
     procedure StartNextTurn();
-    // procedure StartMoveToken;
-    // procedure FinishMoveToken;
     constructor Create(playerNumber: integer);
 
   end;
@@ -63,7 +61,7 @@ const
 begin
   case playerNumber of
     Red:
-      begin
+      begin     {
         ListOfYardSpaces := TImageArray.Create
           (FormBoard.imgBoardSpace_RedTopLeft,
           FormBoard.imgBoardSpace_RedTopRight,
@@ -73,7 +71,9 @@ begin
         ListOfHomeSpaces := TImageArray.Create
           (FormBoard.imgBoardSpace_RedHome1, FormBoard.imgBoardSpace_RedHome2,
           FormBoard.imgBoardSpace_RedHome3, FormBoard.imgBoardSpace_RedHome4,
-          FormBoard.imgBoardSpace_RedHome5);
+          FormBoard.imgBoardSpace_RedHome5);  }
+
+        ListOfYardSpaces :=
 
         StartSpace := FormBoard.imgBoardSpace_27;
         PanelDice := FormBoard.pnlPlayer1RollDice;
@@ -84,7 +84,7 @@ begin
       end;
 
     Yellow:
-      begin
+      begin   {
         ListOfYardSpaces := TImageArray.Create
           (FormBoard.imgBoardSpace_YellowTopLeft,
           FormBoard.imgBoardSpace_YellowTopRight,
@@ -96,7 +96,7 @@ begin
           FormBoard.imgBoardSpace_YellowHome2,
           FormBoard.imgBoardSpace_YellowHome3,
           FormBoard.imgBoardSpace_YellowHome4,
-          FormBoard.imgBoardSpace_YellowHome5);
+          FormBoard.imgBoardSpace_YellowHome5); }
 
         StartSpace := FormBoard.imgBoardSpace_14;
         PanelDice := FormBoard.pnlPlayer2RollDice;
@@ -108,7 +108,7 @@ begin
 
     Blue:
       begin
-        ListOfYardSpaces := TImageArray.Create
+        {ListOfYardSpaces := TImageArray.Create
           (FormBoard.imgBoardSpace_BlueTopLeft,
           FormBoard.imgBoardSpace_BlueTopRight,
           FormBoard.imgBoardSpace_BlueBottomLeft,
@@ -125,13 +125,13 @@ begin
         PanelDice := FormBoard.pnlPlayer3RollDice;
         ActivePanelColor := clBlue_Board;
         tokenPath := GetCurrentDir +
-          '\Media\Token images\Blue player 3 token.png';
+          '\Media\Token images\Blue player 3 token.png';    }
 
       end;
 
     Green:
       begin
-        ListOfYardSpaces := TImageArray.Create
+        {ListOfYardSpaces := TImageArray.Create
           (FormBoard.imgBoardSpace_GreenTopLeft,
           FormBoard.imgBoardSpace_GreenTopRight,
           FormBoard.imgBoardSpace_GreenBottomLeft,
@@ -142,7 +142,7 @@ begin
           FormBoard.imgBoardSpace_GreenHome2,
           FormBoard.imgBoardSpace_GreenHome3,
           FormBoard.imgBoardSpace_GreenHome4,
-          FormBoard.imgBoardSpace_GreenHome5);
+          FormBoard.imgBoardSpace_GreenHome5);  }
 
         StartSpace := FormBoard.imgBoardSpace_1;
         PanelDice := FormBoard.pnlPlayer4RollDice;

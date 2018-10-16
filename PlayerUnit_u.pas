@@ -37,11 +37,13 @@ type
     ActivePanelColor: integer;
     isActive: boolean;
     tokenPath: string;
+    playerNumber: integer;
 
     procedure StartDiceRoll();
     procedure FinishDiceRoll();
     procedure StartNextTurn();
-    constructor Create(playerNumber: integer);
+    procedure EnablePlayerColourSpaces(bool: boolean);
+    constructor Create(number: integer);
 
   end;
 
@@ -50,7 +52,7 @@ implementation
 uses
   MainMenu_u, Board_u;
 
-constructor TPlayer.Create(playerNumber: integer);
+constructor TPlayer.Create(number: integer);
 
 const
   Red = 1;
@@ -59,9 +61,10 @@ const
   Green = 4;
 
 begin
+  playerNumber := number;
   case playerNumber of
     Red:
-      begin     {
+      begin
         ListOfYardSpaces := TImageArray.Create
           (FormBoard.imgBoardSpace_RedTopLeft,
           FormBoard.imgBoardSpace_RedTopRight,
@@ -71,9 +74,7 @@ begin
         ListOfHomeSpaces := TImageArray.Create
           (FormBoard.imgBoardSpace_RedHome1, FormBoard.imgBoardSpace_RedHome2,
           FormBoard.imgBoardSpace_RedHome3, FormBoard.imgBoardSpace_RedHome4,
-          FormBoard.imgBoardSpace_RedHome5);  }
-
-        ListOfYardSpaces :=
+          FormBoard.imgBoardSpace_RedHome5);
 
         StartSpace := FormBoard.imgBoardSpace_27;
         PanelDice := FormBoard.pnlPlayer1RollDice;
@@ -84,7 +85,7 @@ begin
       end;
 
     Yellow:
-      begin   {
+      begin
         ListOfYardSpaces := TImageArray.Create
           (FormBoard.imgBoardSpace_YellowTopLeft,
           FormBoard.imgBoardSpace_YellowTopRight,
@@ -96,7 +97,7 @@ begin
           FormBoard.imgBoardSpace_YellowHome2,
           FormBoard.imgBoardSpace_YellowHome3,
           FormBoard.imgBoardSpace_YellowHome4,
-          FormBoard.imgBoardSpace_YellowHome5); }
+          FormBoard.imgBoardSpace_YellowHome5);
 
         StartSpace := FormBoard.imgBoardSpace_14;
         PanelDice := FormBoard.pnlPlayer2RollDice;
@@ -108,7 +109,7 @@ begin
 
     Blue:
       begin
-        {ListOfYardSpaces := TImageArray.Create
+        ListOfYardSpaces := TImageArray.Create
           (FormBoard.imgBoardSpace_BlueTopLeft,
           FormBoard.imgBoardSpace_BlueTopRight,
           FormBoard.imgBoardSpace_BlueBottomLeft,
@@ -125,13 +126,13 @@ begin
         PanelDice := FormBoard.pnlPlayer3RollDice;
         ActivePanelColor := clBlue_Board;
         tokenPath := GetCurrentDir +
-          '\Media\Token images\Blue player 3 token.png';    }
+          '\Media\Token images\Blue player 3 token.png';
 
       end;
 
     Green:
       begin
-        {ListOfYardSpaces := TImageArray.Create
+        ListOfYardSpaces := TImageArray.Create
           (FormBoard.imgBoardSpace_GreenTopLeft,
           FormBoard.imgBoardSpace_GreenTopRight,
           FormBoard.imgBoardSpace_GreenBottomLeft,
@@ -142,7 +143,7 @@ begin
           FormBoard.imgBoardSpace_GreenHome2,
           FormBoard.imgBoardSpace_GreenHome3,
           FormBoard.imgBoardSpace_GreenHome4,
-          FormBoard.imgBoardSpace_GreenHome5);  }
+          FormBoard.imgBoardSpace_GreenHome5);
 
         StartSpace := FormBoard.imgBoardSpace_1;
         PanelDice := FormBoard.pnlPlayer4RollDice;
@@ -169,13 +170,33 @@ begin
 end;
 
 procedure TPlayer.FinishDiceRoll();
+var
+  i: integer;
 begin
-  PanelDice.Color := clGray;
   PanelDice.Enabled := False;
+  if lastRoll <> 6 then
+    for i := 0 to high(ListOfYardSpaces) do
+    begin
+      if ListOfYardSpaces[i].Picture <> Nil then
+      begin
+        StartNextTurn;
+        break;
+      end
+
+      else
+      begin
+        EnablePlayerColourSpaces(True);
+        break;
+      end;
+
+    end
+    else
+      EnablePlayerColourSpaces(True);
 end;
 
 procedure TPlayer.StartNextTurn();
 begin
+  PanelDice.Color := clGray;
   if CurrentPlayerIndex < High(ListOfActivePlayers) then
     CurrentPlayerIndex := CurrentPlayerIndex + 1
   else
@@ -184,18 +205,30 @@ begin
   ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
 end;
 
+procedure TPlayer.EnablePlayerColourSpaces(bool: boolean);
+begin
+  case playerNumber of
+    1:
+      FormBoard.EnableRedSpaces(bool);
+    2:
+      FormBoard.EnableYellowSpaces(bool);
+    3:
+      FormBoard.EnableBlueSpaces(bool);
+    4:
+      FormBoard.EnableGreenSpaces(bool);
+  end;
+end;
+
 procedure TToken.MoveOutOfYard(rollThrown: integer);
 begin
-  if (rollThrown = 6) and (isInYard = True) then
-  begin
-    positionInBoardSpaceArray := 0;
-    CurrentSelectedToken.Position.Picture := Nil;
-    Position := ListOfActivePlayers[CurrentPlayerIndex].StartSpace;
-    CurrentSelectedToken.Position.Picture.LoadFromFile
-      (ListOfActivePlayers[CurrentPlayerIndex].tokenPath);
+  positionInBoardSpaceArray := 0;
+  CurrentSelectedToken.Position.Picture := Nil;
+  Position := ListOfActivePlayers[CurrentPlayerIndex].StartSpace;
+  CurrentSelectedToken.Position.Picture.LoadFromFile
+    (ListOfActivePlayers[CurrentPlayerIndex].tokenPath);
 
-    ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn();
-  end;
+  ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn();
+
 end;
 
 end.

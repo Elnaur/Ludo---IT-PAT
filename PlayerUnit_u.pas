@@ -197,6 +197,7 @@ end;
 procedure TPlayer.StartNextTurn();
 begin
   PanelDice.Color := clGray;
+
   if CurrentPlayerIndex < High(ListOfActivePlayers) then
     CurrentPlayerIndex := CurrentPlayerIndex + 1
   else

@@ -197,7 +197,7 @@ begin
   begin
     ListOfBoardSpaces[i].Enabled := bool;
   end;
-//ShowMessage('Board spaces set to ' + bool);
+  // ShowMessage('Board spaces set to ' + bool);
 end;
 
 procedure TFormBoard.EnableRedSpaces(bool: boolean);
@@ -375,9 +375,11 @@ begin
   begin
     if ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens[i].Position =
       CurrentSelectedImageSpace then
+    begin
       CurrentSelectedToken := ListOfActivePlayers[CurrentPlayerIndex]
         .ListOfTokens[i];
-    CurrentSelectedToken.Position := CurrentSelectedImageSpace;
+      CurrentSelectedToken.Position := CurrentSelectedImageSpace;
+    end;
   end;
 
   PrepareTokenToMove;
@@ -389,7 +391,6 @@ begin
   begin
     CurrentSelectedToken.MoveOutOfYard(lastRoll);
   end;
-  ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn;
 end;
 
 end.

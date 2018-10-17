@@ -18,6 +18,8 @@ type
     isInYard: boolean;
     isInBoard: boolean;
 
+    constructor Create();
+
     procedure MoveOutOfYard(rollThrown: integer);
     // procedure MoveOnToHome(rollThrown: integer);
     // procedure MoveForward(rollThrown: integer);
@@ -51,6 +53,14 @@ implementation
 
 uses
   MainMenu_u, Board_u;
+
+constructor TToken.Create();
+begin
+  isSelected := False;
+  isinHome := False;
+  isInYard := True;
+  isInBoard := False;
+end;
 
 constructor TPlayer.Create(number: integer);
 

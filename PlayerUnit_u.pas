@@ -11,7 +11,6 @@ type
 type
   TToken = class
     Position: TImage;
-    positionInBoardSpaceArray: integer;
 
     isSelected: boolean;
     isinHome: boolean;
@@ -22,7 +21,7 @@ type
 
     procedure MoveOutOfYard(rollThrown: integer);
     // procedure MoveOnToHome(rollThrown: integer);
-    // procedure MoveForward(rollThrown: integer);
+    procedure MoveForward(rollThrown: integer);
   end;
 
 type
@@ -185,23 +184,24 @@ var
 begin
   PanelDice.Enabled := False;
   if lastRoll <> 6 then
-    for i := 0 to high(ListOfYardSpaces) do
+  begin
+    if ((ListOfYardSpaces[0].Picture <> Nil) and
+      (ListOfYardSpaces[1].Picture <> Nil)) and
+      ((ListOfYardSpaces[2].Picture <> Nil) and
+      (ListOfYardSpaces[3].Picture <> Nil)) then // if all tokens are still in their Yard and the throw is not six
     begin
-      if ListOfYardSpaces[i].Picture <> Nil then
-      begin
-        StartNextTurn;
-        break;
-      end
-
-      else
-      begin
-        EnablePlayerColourSpaces(True);
-        break;
-      end;
-
+      StartNextTurn;
     end
-    else
+    else // one of the tokens is out and the roll is not six
+    begin
       EnablePlayerColourSpaces(True);
+    end;
+  end
+  else // one of the tokens is out and the roll is six
+  begin
+    EnablePlayerColourSpaces(True);
+  end;
+
 end;
 
 procedure TPlayer.StartNextTurn();
@@ -232,13 +232,27 @@ end;
 
 procedure TToken.MoveOutOfYard(rollThrown: integer);
 begin
-  positionInBoardSpaceArray := 0;
   CurrentSelectedToken.Position.Picture := Nil;
   Position := ListOfActivePlayers[CurrentPlayerIndex].StartSpace;
   CurrentSelectedToken.Position.Picture.LoadFromFile
     (ListOfActivePlayers[CurrentPlayerIndex].tokenPath);
+  isInYard := False;
+  isInBoard := True;
+end;
 
-  ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn();
+procedure TToken.MoveForward(rollThrown: integer);
+var
+  i: integer;
+begin
+  CurrentSelectedToken.Position.Picture := Nil;
+
+  for i := 0 to high(ListOfBoardSpaces) do
+  begin
+    if ListOfBoardSpaces[i] = CurrentSelectedImageSpace then
+      Position := ListOfBoardSpaces[i + lastRoll];
+  end;
+  CurrentSelectedToken.Position.Picture.LoadFromFile
+    (ListOfActivePlayers[CurrentPlayerIndex].tokenPath);
 
 end;
 

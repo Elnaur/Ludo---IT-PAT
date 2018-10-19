@@ -672,7 +672,7 @@ object FormBoard: TFormBoard
     Ctl3D = True
     ParentBackground = False
     ParentCtl3D = False
-    TabOrder = 2
+    TabOrder = 3
     DesignSize = (
       225
       692)
@@ -739,7 +739,7 @@ object FormBoard: TFormBoard
         Font.Style = [fsBold]
         ParentBackground = False
         ParentFont = False
-        TabOrder = 0
+        TabOrder = 1
         OnClick = ActiveDiceButtonClick
       end
       object pnlPlayer2Heading: TPanel
@@ -755,7 +755,7 @@ object FormBoard: TFormBoard
         Font.Style = [fsBold]
         ParentBackground = False
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 0
       end
     end
   end
@@ -768,7 +768,7 @@ object FormBoard: TFormBoard
     Align = alRight
     Color = clSilver
     ParentBackground = False
-    TabOrder = 1
+    TabOrder = 2
     DesignSize = (
       225
       692)
@@ -794,7 +794,7 @@ object FormBoard: TFormBoard
         Font.Style = [fsBold]
         ParentBackground = False
         ParentFont = False
-        TabOrder = 0
+        TabOrder = 1
         OnClick = ActiveDiceButtonClick
       end
       object pnlPlayer3Heading: TPanel
@@ -810,12 +810,12 @@ object FormBoard: TFormBoard
         Font.Style = [fsBold]
         ParentBackground = False
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 0
       end
     end
     object pnlPlayer4: TPanel
-      Left = 8
-      Top = 347
+      Left = 0
+      Top = 355
       Width = 209
       Height = 333
       Anchors = [akLeft]
@@ -835,7 +835,7 @@ object FormBoard: TFormBoard
         Font.Style = [fsBold]
         ParentBackground = False
         ParentFont = False
-        TabOrder = 0
+        TabOrder = 1
         OnClick = ActiveDiceButtonClick
       end
       object pnlPlayer4Heading: TPanel
@@ -851,7 +851,7 @@ object FormBoard: TFormBoard
         Font.Style = [fsBold]
         ParentBackground = False
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 0
       end
     end
   end
@@ -864,7 +864,7 @@ object FormBoard: TFormBoard
     Align = alClient
     Color = clCream
     ParentBackground = False
-    TabOrder = 3
+    TabOrder = 4
     DesignSize = (
       726
       692)
@@ -3435,14 +3435,23 @@ object FormBoard: TFormBoard
     end
   end
   object BtnExitBoard: TButton
-    Left = 862
-    Top = 660
-    Width = 90
-    Height = 30
+    Left = 885
+    Top = 665
+    Width = 72
+    Height = 26
     Align = alCustom
     Anchors = [akRight, akBottom]
     Caption = 'Back'
-    TabOrder = 0
+    TabOrder = 1
     OnClick = BtnExitBoardClick
+  end
+  object BtnRules: TButton
+    Left = 885
+    Top = 633
+    Width = 72
+    Height = 26
+    Caption = 'Rules'
+    TabOrder = 0
+    OnClick = BtnRulesClick
   end
 end

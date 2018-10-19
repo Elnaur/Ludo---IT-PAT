@@ -128,10 +128,11 @@ type
     pnlPlayer2Heading: TPanel;
     pnlPlayer3Heading: TPanel;
     pnlPlayer4Heading: TPanel;
+    BtnRules: TButton;
     procedure BtnExitBoardClick(Sender: TObject);
     procedure ActiveDiceButtonClick(Sender: TObject);
     procedure AssignSelectedToken(Sender: TObject);
-    procedure PrepareTokenToMove;
+    procedure ChooseHowToMoveToken;
     procedure PlayGame;
     procedure FormShow(Sender: TObject);
 
@@ -140,6 +141,7 @@ type
     procedure EnableBlueSpaces(bool: boolean);
     procedure EnableYellowSpaces(bool: boolean);
     procedure EnableGreenSpaces(bool: boolean);
+    procedure BtnRulesClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -174,12 +176,17 @@ const
 
 implementation
 
-uses MainMenu_u, AskToExitBoard_u;
+uses MainMenu_u, AskToExitBoard_u, Rules_u;
 {$R *.dfm}
 
 procedure TFormBoard.BtnExitBoardClick(Sender: TObject);
 begin
   FormAskToExitBoard.Show;
+end;
+
+procedure TFormBoard.BtnRulesClick(Sender: TObject);
+begin
+  FormRules.Show;
 end;
 
 procedure TFormBoard.PlayGame();
@@ -197,7 +204,6 @@ begin
   begin
     ListOfBoardSpaces[i].Enabled := bool;
   end;
-  // ShowMessage('Board spaces set to ' + bool);
 end;
 
 procedure TFormBoard.EnableRedSpaces(bool: boolean);
@@ -212,6 +218,11 @@ begin
   for i := 0 to high(ListOfRedHomeSpaces) do
   begin
     ListOfRedHomeSpaces[i].Enabled := bool;
+  end;
+
+  for i := 0 to high(ListOfBoardSpaces) do
+  begin
+    ListOfBoardSpaces[i].Enabled := bool;
   end;
 end;
 
@@ -228,6 +239,11 @@ begin
   begin
     ListOfYellowHomeSpaces[i].Enabled := bool;
   end;
+
+  for i := 0 to high(ListOfBoardSpaces) do
+  begin
+    ListOfBoardSpaces[i].Enabled := bool;
+  end;
 end;
 
 procedure TFormBoard.EnableBlueSpaces(bool: boolean);
@@ -243,6 +259,11 @@ begin
   begin
     ListOfBlueHomeSpaces[i].Enabled := bool;
   end;
+
+  for i := 0 to high(ListOfBoardSpaces) do
+  begin
+    ListOfBoardSpaces[i].Enabled := bool;
+  end;
 end;
 
 procedure TFormBoard.EnableGreenSpaces(bool: boolean);
@@ -257,6 +278,11 @@ begin
   for i := 0 to high(ListOfGreenHomeSpaces) do
   begin
     ListOfGreenHomeSpaces[i].Enabled := bool;
+  end;
+
+  for i := 0 to high(ListOfBoardSpaces) do
+  begin
+    ListOfBoardSpaces[i].Enabled := bool;
   end;
 end;
 
@@ -367,6 +393,7 @@ begin
 end;
 
 procedure TFormBoard.AssignSelectedToken(Sender: TObject);
+// Refered to from the on click event
 var
   i: integer;
 begin
@@ -382,15 +409,23 @@ begin
     end;
   end;
 
-  PrepareTokenToMove;
+  ChooseHowToMoveToken;
 end;
 
-procedure TFormBoard.PrepareTokenToMove();
+procedure TFormBoard.ChooseHowToMoveToken();
 begin
   if (lastRoll = 6) and (CurrentSelectedToken.isInYard = True) then
   begin
     CurrentSelectedToken.MoveOutOfYard(lastRoll);
+  end
+
+  else if CurrentSelectedToken.isInBoard = True then
+  begin
+    CurrentSelectedToken.MoveForward(lastRoll);
   end;
+
+  ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn();
+
 end;
 
 end.

@@ -163,7 +163,7 @@ begin
   else
   begin
     ShowMessage(
-      'All players cannot be non-existant or the game would be a little pointless.');
+      'Please change at least one player type to Person or Computer.');
   end;
 end;
 

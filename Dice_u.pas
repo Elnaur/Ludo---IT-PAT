@@ -22,6 +22,8 @@ var
   roll: integer;
   previousRoll: integer;
   current, finish, start: real;
+
+  amountOfDiceRolls : integer;
 begin
   Randomize;
   finish := 1000;

@@ -12,7 +12,6 @@ type
   TToken = class
     Position: TImage;
 
-    isSelected: boolean;
     isinHome: boolean;
     isInYard: boolean;
     isInBoard: boolean;
@@ -36,7 +35,6 @@ type
     ListOfYardSpaces, ListOfHomeSpaces: TImageArray;
     PanelDice: TPanel;
     ActivePanelColor: integer;
-    isActive: boolean;
     tokenPath: string;
     playerNumber: integer;
 
@@ -55,7 +53,6 @@ uses
 
 constructor TToken.Create();
 begin
-  isSelected := False;
   isinHome := False;
   isInYard := True;
   isInBoard := False;
@@ -179,26 +176,26 @@ begin
 end;
 
 procedure TPlayer.FinishDiceRoll();
-var
-  i: integer;
 begin
   PanelDice.Enabled := False;
   if lastRoll <> 6 then
   begin
-    if ((ListOfYardSpaces[0].Picture <> Nil) and
-      (ListOfYardSpaces[1].Picture <> Nil)) and
-      ((ListOfYardSpaces[2].Picture <> Nil) and
-      (ListOfYardSpaces[3].Picture <> Nil)) then // if all tokens are still in their Yard and the throw is not six
+    if ((Token1.isInYard = True) and (Token2.isInYard = True)) and
+      ((Token3.isInYard = True) and (Token4.isInYard = True)) then
+    // if all tokens are still in their Yard and the throw is not six
     begin
+      // ShowMessage('all tokens are still in their Yard and the throw is not six');
       StartNextTurn;
     end
     else // one of the tokens is out and the roll is not six
     begin
+      // Showmessage('one of the tokens is out and the roll is not six');
       EnablePlayerColourSpaces(True);
     end;
   end
-  else // one of the tokens is out and the roll is six
+  else // the roll is six, so it does not matter if tokens are out or not
   begin
+    // ShowMessage('the roll is six, so it does not matter if tokens are out or not');
     EnablePlayerColourSpaces(True);
   end;
 
@@ -207,6 +204,7 @@ end;
 procedure TPlayer.StartNextTurn();
 begin
   PanelDice.Color := clGray;
+  EnablePlayerColourSpaces(False);
 
   if CurrentPlayerIndex < High(ListOfActivePlayers) then
     CurrentPlayerIndex := CurrentPlayerIndex + 1
@@ -242,7 +240,7 @@ end;
 
 procedure TToken.MoveForward(rollThrown: integer);
 var
-  i: integer;
+  i, j, k: byte;
 begin
   CurrentSelectedToken.Position.Picture := Nil;
 
@@ -251,6 +249,38 @@ begin
     if ListOfBoardSpaces[i] = CurrentSelectedImageSpace then
       Position := ListOfBoardSpaces[i + lastRoll];
   end;
+
+  if CurrentSelectedToken.Position <> Nil then // If there is already another token's image in it
+  begin
+    for i := 0 to 3 do
+      for j := 0 to 3 do
+      begin
+
+        if (ListOfActivePlayers[i].ListOfTokens[j].Position =
+            CurrentSelectedToken.Position) and
+          (ListOfActivePlayers[i].ListOfTokens[j] <> CurrentSelectedToken) then
+        begin
+
+          for k := 0 to 3 do
+          begin
+
+            if ListOfActivePlayers[i].ListOfYardSpaces[k].Picture <> Nil then
+            begin
+
+              ListOfActivePlayers[i].ListOfYardSpaces[k].Picture.LoadFromFile
+                (ListOfActivePlayers[i].tokenPath);
+              ListOfActivePlayers[i].ListOfTokens[j].isInYard := True;
+              ListOfActivePlayers[i].ListOfTokens[j].isInBoard := False;
+
+            end;
+          end;
+
+        end;
+
+      end;
+
+  end;
+
   CurrentSelectedToken.Position.Picture.LoadFromFile
     (ListOfActivePlayers[CurrentPlayerIndex].tokenPath);
 

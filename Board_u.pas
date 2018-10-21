@@ -152,8 +152,6 @@ type
 var
   FormBoard: TFormBoard;
   lastRoll: integer;
-  GameOver: boolean;
-  WaitingForButtonPress: boolean;
   CurrentPlayerIndex: integer;
 
   ListOfBoardSpaces: TImageArray;
@@ -169,10 +167,6 @@ var
   // TPlayer is definied in the unit PlayerUnit_u
 
   ListOfActivePlayers: array of TPlayer;
-
-const
-  ListOfDiceImages: array [1 .. 6] of string = ('Dice_1.png', 'Dice_2.png',
-    'Dice_3.png', 'Dice_4.png', 'Dice_5.png', 'Dice_6.png');
 
 implementation
 
@@ -191,7 +185,6 @@ end;
 
 procedure TFormBoard.PlayGame();
 begin
-  GameOver := False;
   CurrentPlayerIndex := 0;
   ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
 end;
@@ -268,7 +261,7 @@ end;
 
 procedure TFormBoard.EnableGreenSpaces(bool: boolean);
 var
-  i: integer;
+  i: byte;
 begin
   for i := 0 to high(ListOfGreenYardSpaces) do
   begin
@@ -288,7 +281,7 @@ end;
 
 procedure TFormBoard.FormShow(Sender: TObject);
 var
-  i, j: integer;
+  i, j: byte;
 begin
   left := (Screen.Width div 2) - (FormBoard.Width div 2);
   top := (Screen.WorkAreaHeight div 2) - (FormBoard.Height div 2);
@@ -395,7 +388,7 @@ end;
 procedure TFormBoard.AssignSelectedToken(Sender: TObject);
 // Refered to from the on click event
 var
-  i: integer;
+  i: byte;
 begin
   CurrentSelectedImageSpace := Sender as TImage;
   for i := 0 to 3 do

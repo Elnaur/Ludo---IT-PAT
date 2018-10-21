@@ -70,19 +70,15 @@ const
   // Something to do with how old intel processors worked.
   clRed_board = $0000D4;
   clDarkRed_board = $000055;
-  clLightRed_board = $D5D5FF;
 
   clYellow_board = $55DDFF;
   clDarkYellow_board = $0088AA;
-  clLightYellow_board = $D5F6FF;
 
   clBlue_board = $D4AA00;
   clDarkBlue_board = $554400;
-  clLightBlue_board = $FFF6D5;
 
   clGreen_board = $00D455;
   clDarkGreen_board = $008033;
-  clLightGreen_board = $D5FFE5;
 
 implementation
 
@@ -133,12 +129,13 @@ end;
 
 procedure TFormMainMenu.BtnPlayClick(Sender: TObject);
 var
-  i: integer;
+  i: byte;
 begin
-  if not((Player1TypeArray.currentIndex = 0) and
-      (Player1TypeArray.currentIndex = 0) and
-      (Player1TypeArray.currentIndex = 0) and
-      (Player1TypeArray.currentIndex = 0)) then
+  if not(((Player1TypeArray.currentIndex = 0) and
+        (Player1TypeArray.currentIndex = 0)) and
+      ((Player1TypeArray.currentIndex = 0) and
+        (Player1TypeArray.currentIndex = 0))) then
+
   begin
     try
       ReWrite(PlayerTypeSettings);
@@ -162,8 +159,8 @@ begin
   end
   else
   begin
-    ShowMessage(
-      'Please change at least one player type to Person or Computer.');
+    ShowMessage
+      ('Please change at least one player type to Person or Computer.');
   end;
 end;
 
@@ -175,7 +172,7 @@ end;
 procedure TFormMainMenu.FormCreate(Sender: TObject);
 // Initialises TFormMainMenu
 var
-  i: integer;
+  i: byte;
 
 begin
   left := (Screen.Width div 2) - (FormMainMenu.Width div 2);

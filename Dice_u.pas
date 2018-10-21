@@ -7,10 +7,14 @@ procedure ShuffleDice();
 
 implementation
 
-uses Board_u, Sysutils;
+uses Board_u, SysUtils;
 
 var
   lastRoll: integer;
+
+const
+  ListOfDiceImages: array [1 .. 6] of string = ('Dice_1.png', 'Dice_2.png',
+    'Dice_3.png', 'Dice_4.png', 'Dice_5.png', 'Dice_6.png');
 
 function ResultOfDiceRoll(): integer;
 begin

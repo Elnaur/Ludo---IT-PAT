@@ -153,6 +153,7 @@ var
   FormBoard: TFormBoard;
   lastRoll: integer;
   CurrentPlayerIndex: integer;
+  indexOfImageSpace: integer;
 
   ListOfBoardSpaces: TImageArray;
   ListOfRedYardSpaces, ListOfRedHomeSpaces: TImageArray;
@@ -399,13 +400,16 @@ begin
       CurrentSelectedToken := ListOfActivePlayers[CurrentPlayerIndex]
         .ListOfTokens[i];
       CurrentSelectedToken.Position := CurrentSelectedImageSpace;
+      ChooseHowToMoveToken;
+      break;
     end;
   end;
-
-  ChooseHowToMoveToken;
 end;
 
 procedure TFormBoard.ChooseHowToMoveToken();
+var
+  i: integer;
+
 begin
   if (lastRoll = 6) and (CurrentSelectedToken.isInYard = True) then
   begin
@@ -414,7 +418,27 @@ begin
 
   else if CurrentSelectedToken.isInBoard = True then
   begin
-    CurrentSelectedToken.MoveForward(lastRoll);
+    for i := 0 to high(ListOfBoardSpaces) do
+    begin
+      if ListOfBoardSpaces[i] = CurrentSelectedImageSpace then
+        indexOfImageSpace := i;
+    end;
+
+    if (indexOfImageSpace <= ListOfActivePlayers[CurrentPlayerIndex]
+        .IndexOfEnterHomeSpace) and ((indexOfImageSpace + lastRoll)
+        > ListOfActivePlayers[CurrentPlayerIndex].IndexOfEnterHomeSpace) then
+    begin
+      if CurrentSelectedToken.timesPassedHome = 1 then
+        CurrentSelectedToken.MoveOnToHome(lastRoll)
+      else
+      begin
+        CurrentSelectedToken.timesPassedHome :=
+          CurrentSelectedToken.timesPassedHome + 1;
+        CurrentSelectedToken.MoveForward(lastRoll);
+      end;
+    end
+    else
+      CurrentSelectedToken.MoveForward(lastRoll);
   end;
 
   ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn();

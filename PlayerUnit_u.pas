@@ -15,11 +15,12 @@ type
     isinHome: boolean;
     isInYard: boolean;
     isInBoard: boolean;
+    timesPassedHome: byte;
 
     constructor Create();
 
     procedure MoveOutOfYard(rollThrown: integer);
-    // procedure MoveOnToHome(rollThrown: integer);
+    procedure MoveOnToHome(rollThrown: integer);
     procedure MoveForward(rollThrown: integer);
   end;
 
@@ -37,6 +38,7 @@ type
     ActivePanelColor: integer;
     tokenPath: string;
     playerNumber: integer;
+    IndexOfEnterHomeSpace: integer;
 
     procedure StartDiceRoll();
     procedure FinishDiceRoll();
@@ -59,7 +61,8 @@ begin
 end;
 
 constructor TPlayer.Create(number: integer);
-
+var
+  i: integer;
 const
   Red = 1;
   Yellow = 2;
@@ -83,6 +86,7 @@ begin
           FormBoard.imgBoardSpace_RedHome5);
 
         StartSpace := FormBoard.imgBoardSpace_27;
+        IndexOfEnterHomeSpace := 27;
         PanelDice := FormBoard.pnlPlayer1RollDice;
         ActivePanelColor := clRed_Board;
 
@@ -106,6 +110,7 @@ begin
           FormBoard.imgBoardSpace_YellowHome5);
 
         StartSpace := FormBoard.imgBoardSpace_14;
+        IndexOfEnterHomeSpace := 14;
         PanelDice := FormBoard.pnlPlayer2RollDice;
         ActivePanelColor := clYellow_Board;
         tokenPath := GetCurrentDir +
@@ -129,6 +134,7 @@ begin
           FormBoard.imgBoardSpace_BlueHome5);
 
         StartSpace := FormBoard.imgBoardSpace_41;
+        IndexOfEnterHomeSpace := 41;
         PanelDice := FormBoard.pnlPlayer3RollDice;
         ActivePanelColor := clBlue_Board;
         tokenPath := GetCurrentDir +
@@ -152,12 +158,14 @@ begin
           FormBoard.imgBoardSpace_GreenHome5);
 
         StartSpace := FormBoard.imgBoardSpace_1;
+        IndexOfEnterHomeSpace := 1;
         PanelDice := FormBoard.pnlPlayer4RollDice;
         ActivePanelColor := clGreen_Board;
         tokenPath := GetCurrentDir +
           '\Media\Token images\Green player 4 token.png';
       end;
   end;
+
   Token1 := TToken.Create;
   Token2 := TToken.Create;
   Token3 := TToken.Create;
@@ -167,6 +175,9 @@ begin
   ListOfTokens[1] := Token2;
   ListOfTokens[2] := Token3;
   ListOfTokens[3] := Token4;
+
+  for i := 0 to 3 do
+    ListOfTokens[i].timesPassedHome := 0;
 end;
 
 procedure TPlayer.StartDiceRoll();
@@ -247,12 +258,16 @@ begin
   for i := 0 to high(ListOfBoardSpaces) do
   begin
     if ListOfBoardSpaces[i] = CurrentSelectedImageSpace then
-      Position := ListOfBoardSpaces[i + lastRoll];
+      if (i + lastRoll) <= high(ListOfBoardSpaces) then
+        Position := ListOfBoardSpaces[i + lastRoll]
+      else
+        Position := ListOfBoardSpaces
+          [(lastRoll - ( high(ListOfBoardSpaces) - i)) - 1];
   end;
 
   if CurrentSelectedToken.Position <> Nil then // If there is already another token's image in it
   begin
-    for i := 0 to 3 do
+    for i := 0 to high(ListOfActivePlayers) do
       for j := 0 to 3 do
       begin
 
@@ -284,6 +299,17 @@ begin
   CurrentSelectedToken.Position.Picture.LoadFromFile
     (ListOfActivePlayers[CurrentPlayerIndex].tokenPath);
 
+end;
+
+procedure TToken.MoveOnToHome(rollThrown: integer);
+begin
+  isInBoard := False;
+  isinHome := True;
+  Position.Picture := Nil;
+  Position := ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces
+    [lastRoll - (ListOfActivePlayers[CurrentPlayerIndex]
+      .IndexOfEnterHomeSpace - indexOfImageSpace) - 1];
+  Position.Picture.LoadFromFile(ListOfActivePlayers[CurrentPlayerIndex].tokenPath);
 end;
 
 end.

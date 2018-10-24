@@ -7,7 +7,8 @@ uses
   Board_u in 'Board_u.pas' {FormBoard},
   AskToExitBoard_u in 'AskToExitBoard_u.pas' {FormAskToExitBoard},
   PlayerUnit_u in 'PlayerUnit_u.pas',
-  Dice_u in 'Dice_u.pas';
+  Dice_u in 'Dice_u.pas',
+  Victory_u in 'Victory_u.pas' {FormVictory};
 
 {$R *.res}
 
@@ -18,5 +19,6 @@ begin
   Application.CreateForm(TFormRules, FormRules);
   Application.CreateForm(TFormBoard, FormBoard);
   Application.CreateForm(TFormAskToExitBoard, FormAskToExitBoard);
+  Application.CreateForm(TFormVictory, FormVictory);
   Application.Run;
 end.

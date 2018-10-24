@@ -57,6 +57,9 @@
 			</DCCReference>
 			<DCCReference Include="PlayerUnit_u.pas"/>
 			<DCCReference Include="Dice_u.pas"/>
+			<DCCReference Include="Victory_u.pas">
+				<Form>FormVictory</Form>
+			</DCCReference>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

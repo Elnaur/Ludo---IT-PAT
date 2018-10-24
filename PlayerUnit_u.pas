@@ -3,7 +3,7 @@ unit PlayerUnit_u;
 interface
 
 uses
-  ExtCtrls, pngimage, SysUtils, Dialogs, Forms, Graphics;
+  StdCtrls, ExtCtrls, pngimage, SysUtils, Dialogs, Forms, Graphics;
 
 type
   TImageArray = array of TImage;
@@ -15,13 +15,15 @@ type
     isinHome: boolean;
     isInYard: boolean;
     isInBoard: boolean;
+    isFinished: boolean;
     timesPassedHome: byte;
 
     constructor Create();
 
     procedure MoveOutOfYard(rollThrown: integer);
-    procedure MoveOnToHome(rollThrown: integer);
     procedure MoveForward(rollThrown: integer);
+    procedure MoveOnToHome(rollThrown: integer);
+    procedure MoveForwardOnHome(rollThrown: integer);
   end;
 
 type
@@ -39,6 +41,8 @@ type
     tokenPath: string;
     playerNumber: integer;
     IndexOfEnterHomeSpace: integer;
+    AmountOfTokensHome: TLabel;
+    AmountFinished: integer;
 
     procedure StartDiceRoll();
     procedure FinishDiceRoll();
@@ -51,13 +55,16 @@ type
 implementation
 
 uses
-  MainMenu_u, Board_u;
+  MainMenu_u, Rules_u, Board_u, Victory_u;
 
 constructor TToken.Create();
 begin
   isinHome := False;
   isInYard := True;
   isInBoard := False;
+  isFinished := False;
+
+  timesPassedHome := 0;
 end;
 
 constructor TPlayer.Create(number: integer);
@@ -92,6 +99,7 @@ begin
 
         tokenPath := GetCurrentDir +
           '\Media\Token images\Red player 1 token.png';
+        AmountOfTokensHome := FormBoard.lblPlayer1AmountOfTokensHome;
       end;
 
     Yellow:
@@ -115,6 +123,7 @@ begin
         ActivePanelColor := clYellow_Board;
         tokenPath := GetCurrentDir +
           '\Media\Token images\Yellow player 2 token.png';
+        AmountOfTokensHome := FormBoard.lblPlayer2AmountOfTokensHome;
 
       end;
 
@@ -139,6 +148,7 @@ begin
         ActivePanelColor := clBlue_Board;
         tokenPath := GetCurrentDir +
           '\Media\Token images\Blue player 3 token.png';
+        AmountOfTokensHome := FormBoard.lblPlayer3AmountOfTokensHome;
 
       end;
 
@@ -163,8 +173,10 @@ begin
         ActivePanelColor := clGreen_Board;
         tokenPath := GetCurrentDir +
           '\Media\Token images\Green player 4 token.png';
+        AmountOfTokensHome := FormBoard.lblPlayer4AmountOfTokensHome;
       end;
   end;
+  AmountFinished := 0;
 
   Token1 := TToken.Create;
   Token2 := TToken.Create;
@@ -175,9 +187,6 @@ begin
   ListOfTokens[1] := Token2;
   ListOfTokens[2] := Token3;
   ListOfTokens[3] := Token4;
-
-  for i := 0 to 3 do
-    ListOfTokens[i].timesPassedHome := 0;
 end;
 
 procedure TPlayer.StartDiceRoll();
@@ -216,6 +225,7 @@ procedure TPlayer.StartNextTurn();
 begin
   PanelDice.Color := clGray;
   EnablePlayerColourSpaces(False);
+  FormBoard.lblDiceResult.Caption := '';
 
   if CurrentPlayerIndex < High(ListOfActivePlayers) then
     CurrentPlayerIndex := CurrentPlayerIndex + 1
@@ -240,7 +250,18 @@ begin
 end;
 
 procedure TToken.MoveOutOfYard(rollThrown: integer);
+var
+  i: integer;
 begin
+  for i := 0 to 3 do
+    if ListOfActivePlayers[CurrentPlayerIndex].StartSpace = ListOfActivePlayers
+      [CurrentPlayerIndex].ListOfTokens[i].Position then
+    begin
+      ShowMessage(
+        'Please choose another token to move. The token you selected will move on to another of your tokens and you cannot do that.');
+      Abort;
+    end;
+
   CurrentSelectedToken.Position.Picture := Nil;
   Position := ListOfActivePlayers[CurrentPlayerIndex].StartSpace;
   CurrentSelectedToken.Position.Picture.LoadFromFile
@@ -252,18 +273,30 @@ end;
 procedure TToken.MoveForward(rollThrown: integer);
 var
   i, j, k: byte;
+  PossiblePosition: TImage;
 begin
-  CurrentSelectedToken.Position.Picture := Nil;
 
   for i := 0 to high(ListOfBoardSpaces) do
   begin
     if ListOfBoardSpaces[i] = CurrentSelectedImageSpace then
       if (i + lastRoll) <= high(ListOfBoardSpaces) then
-        Position := ListOfBoardSpaces[i + lastRoll]
+        PossiblePosition := ListOfBoardSpaces[i + lastRoll]
       else
-        Position := ListOfBoardSpaces
+        PossiblePosition := ListOfBoardSpaces
           [(lastRoll - ( high(ListOfBoardSpaces) - i)) - 1];
   end;
+
+  for i := 0 to 3 do
+    if PossiblePosition = ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens
+      [i].Position then
+    begin
+      ShowMessage(
+        'Please choose another token to move. The token you selected will move on to another of your tokens and you cannot do that.');
+      Abort;
+    end;
+
+  Position.Picture := Nil;
+  Position := PossiblePosition;
 
   if CurrentSelectedToken.Position <> Nil then // If there is already another token's image in it
   begin
@@ -275,19 +308,20 @@ begin
             CurrentSelectedToken.Position) and
           (ListOfActivePlayers[i].ListOfTokens[j] <> CurrentSelectedToken) then
         begin
-
+          ShowMessage('Detected token has landed on top of another one');
           for k := 0 to 3 do
           begin
 
-            if ListOfActivePlayers[i].ListOfYardSpaces[k].Picture <> Nil then
+            if ListOfActivePlayers[i].ListOfYardSpaces[k].Picture = Nil then
             begin
-
+              ShowMessage('Found space to move token back to');
               ListOfActivePlayers[i].ListOfYardSpaces[k].Picture.LoadFromFile
                 (ListOfActivePlayers[i].tokenPath);
               ListOfActivePlayers[i].ListOfTokens[j].isInYard := True;
               ListOfActivePlayers[i].ListOfTokens[j].isInBoard := False;
 
             end;
+            ShowMessage('Did not find space to move token back to');
           end;
 
         end;
@@ -302,14 +336,90 @@ begin
 end;
 
 procedure TToken.MoveOnToHome(rollThrown: integer);
+var
+  i: integer;
 begin
+
+  for i := 0 to 3 do
+    if (ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces[lastRoll -
+        (ListOfActivePlayers[CurrentPlayerIndex].IndexOfEnterHomeSpace -
+          indexOfImageSpace) - 1] = CurrentSelectedToken.Position) and
+      (isFinished = False) then
+    begin
+      ShowMessage(
+        'Please choose another token to move. The token you selected will move on to another of your tokens and you cannot do that.');
+      Abort;
+    end;
+
   isInBoard := False;
   isinHome := True;
   Position.Picture := Nil;
   Position := ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces
     [lastRoll - (ListOfActivePlayers[CurrentPlayerIndex]
       .IndexOfEnterHomeSpace - indexOfImageSpace) - 1];
-  Position.Picture.LoadFromFile(ListOfActivePlayers[CurrentPlayerIndex].tokenPath);
+  Position.Picture.LoadFromFile(ListOfActivePlayers[CurrentPlayerIndex]
+      .tokenPath);
+end;
+
+procedure TToken.MoveForwardOnHome(rollThrown: integer);
+var
+  i: integer;
+  PossiblePosition: TImage;
+begin
+  try
+    begin
+      for i := 0 to high(ListOfActivePlayers[CurrentPlayerIndex]
+          .ListOfHomeSpaces) do
+      begin
+        if ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces[i] =
+          CurrentSelectedImageSpace then
+        begin
+          PossiblePosition := ListOfActivePlayers[CurrentPlayerIndex]
+            .ListOfHomeSpaces[i + lastRoll];
+        end;
+      end;
+
+    end;
+  except
+    on E: Exception do
+    begin
+      Position := ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces[4];
+    end;
+
+  end;
+
+  for i := 0 to 3 do
+    if (PossiblePosition = ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens
+        [i].Position) and (isFinished = False) then
+    begin
+      ShowMessage(
+        'Please choose another token to move. The token you selected will move on to another of your tokens and you cannot do that.');
+      Abort;
+    end;
+
+  Position.Picture := Nil;
+  Position := PossiblePosition;
+  Position.Picture.LoadFromFile(ListOfActivePlayers[CurrentPlayerIndex]
+      .tokenPath);
+
+  if Position = ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces[4] then
+  begin
+    isFinished := True;
+    ListOfActivePlayers[CurrentPlayerIndex].AmountFinished :=
+      ListOfActivePlayers[CurrentPlayerIndex].AmountFinished + 1;
+    ListOfActivePlayers[CurrentPlayerIndex].AmountOfTokensHome.Caption := copy
+      (ListOfActivePlayers[CurrentPlayerIndex].AmountOfTokensHome.Caption, 1,
+      26) + IntToStr(ListOfActivePlayers[CurrentPlayerIndex].AmountFinished);
+
+      if  ListOfActivePlayers[CurrentPlayerIndex].AmountFinished = 4 then
+        begin
+          FormBoard.Enabled := False;
+          FormRules.Enabled := False;
+          FormVictory.Show;
+        end;
+
+  end;
+
 end;
 
 end.

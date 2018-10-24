@@ -116,20 +116,23 @@ type
 
     pnlPlayer1: TPanel;
     pnlPlayer2: TPanel;
-    pnlPlayer3: TPanel;
     pnlPlayer1RollDice: TPanel;
     pnlPlayer2RollDice: TPanel;
-    pnlPlayer3RollDice: TPanel;
     imgDice: TImage;
     lblDiceResult: TLabel;
     pnlPlayer4: TPanel;
     pnlPlayer4RollDice: TPanel;
     pnlPlayer1Heading: TPanel;
     pnlPlayer2Heading: TPanel;
-    pnlPlayer3Heading: TPanel;
     pnlPlayer4Heading: TPanel;
     BtnRules: TButton;
-    procedure BtnExitBoardClick(Sender: TObject);
+    lblPlayer1AmountOfTokensHome: TLabel;
+    pnlPlayer3: TPanel;
+    pnlPlayer3RollDice: TPanel;
+    pnlPlayer3Heading: TPanel;
+    lblPlayer2AmountOfTokensHome: TLabel;
+    lblPlayer4AmountOfTokensHome: TLabel;
+    lblPlayer3AmountOfTokensHome: TLabel;   procedure BtnExitBoardClick(Sender: TObject);
     procedure ActiveDiceButtonClick(Sender: TObject);
     procedure AssignSelectedToken(Sender: TObject);
     procedure ChooseHowToMoveToken;
@@ -151,6 +154,9 @@ type
 
 var
   FormBoard: TFormBoard;
+
+  Winner : TPlayer;
+
   lastRoll: integer;
   CurrentPlayerIndex: integer;
   indexOfImageSpace: integer;
@@ -412,6 +418,7 @@ var
 
 begin
   if (lastRoll = 6) and (CurrentSelectedToken.isInYard = True) then
+  // Move a token from the yard to the board
   begin
     CurrentSelectedToken.MoveOutOfYard(lastRoll);
   end
@@ -429,16 +436,17 @@ begin
         > ListOfActivePlayers[CurrentPlayerIndex].IndexOfEnterHomeSpace) then
     begin
       if CurrentSelectedToken.timesPassedHome = 1 then
+      // Move a token on to home
         CurrentSelectedToken.MoveOnToHome(lastRoll)
       else
       begin
         CurrentSelectedToken.timesPassedHome :=
           CurrentSelectedToken.timesPassedHome + 1;
-        CurrentSelectedToken.MoveForward(lastRoll);
+        CurrentSelectedToken.MoveForward(lastRoll); // Move a token on the board
       end;
     end
     else
-      CurrentSelectedToken.MoveForward(lastRoll);
+      CurrentSelectedToken.MoveForward(lastRoll); // Move a token on the board
   end;
 
   ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn();

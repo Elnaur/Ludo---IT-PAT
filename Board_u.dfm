@@ -683,6 +683,13 @@ object FormBoard: TFormBoard
       Height = 333
       Anchors = [akLeft]
       TabOrder = 0
+      object lblPlayer1AmountOfTokensHome: TLabel
+        Left = 16
+        Top = 90
+        Width = 139
+        Height = 13
+        Caption = 'Amount of tokens in Home: 0'
+      end
       object pnlPlayer1RollDice: TPanel
         Left = 56
         Top = 250
@@ -724,6 +731,13 @@ object FormBoard: TFormBoard
       Height = 333
       Anchors = [akLeft]
       TabOrder = 1
+      object lblPlayer2AmountOfTokensHome: TLabel
+        Left = 16
+        Top = 90
+        Width = 139
+        Height = 13
+        Caption = 'Amount of tokens in Home: 0'
+      end
       object pnlPlayer2RollDice: TPanel
         Left = 48
         Top = 254
@@ -772,54 +786,20 @@ object FormBoard: TFormBoard
     DesignSize = (
       225
       692)
-    object pnlPlayer3: TPanel
-      Left = 7
-      Top = 8
-      Width = 209
-      Height = 333
-      Anchors = [akLeft]
-      TabOrder = 0
-      object pnlPlayer3RollDice: TPanel
-        Left = 48
-        Top = 246
-        Width = 113
-        Height = 41
-        Caption = 'Roll Dice'
-        Color = clGray
-        Enabled = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentBackground = False
-        ParentFont = False
-        TabOrder = 1
-        OnClick = ActiveDiceButtonClick
-      end
-      object pnlPlayer3Heading: TPanel
-        Left = 16
-        Top = 16
-        Width = 177
-        Height = 41
-        Caption = 'Player 3'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentBackground = False
-        ParentFont = False
-        TabOrder = 0
-      end
-    end
     object pnlPlayer4: TPanel
       Left = 0
       Top = 355
       Width = 209
       Height = 333
       Anchors = [akLeft]
-      TabOrder = 1
+      TabOrder = 0
+      object lblPlayer4AmountOfTokensHome: TLabel
+        Left = 16
+        Top = 90
+        Width = 139
+        Height = 13
+        Caption = 'Amount of tokens in Home: 0'
+      end
       object pnlPlayer4RollDice: TPanel
         Left = 48
         Top = 254
@@ -844,6 +824,54 @@ object FormBoard: TFormBoard
         Width = 177
         Height = 41
         Caption = 'Player 4'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentBackground = False
+        ParentFont = False
+        TabOrder = 0
+      end
+    end
+    object pnlPlayer3: TPanel
+      Left = 7
+      Top = 8
+      Width = 209
+      Height = 333
+      Anchors = [akLeft]
+      TabOrder = 1
+      object lblPlayer3AmountOfTokensHome: TLabel
+        Left = 16
+        Top = 90
+        Width = 139
+        Height = 13
+        Caption = 'Amount of tokens in Home: 0'
+      end
+      object pnlPlayer3RollDice: TPanel
+        Left = 48
+        Top = 246
+        Width = 113
+        Height = 41
+        Caption = 'Roll Dice'
+        Color = clGray
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentBackground = False
+        ParentFont = False
+        TabOrder = 1
+        OnClick = ActiveDiceButtonClick
+      end
+      object pnlPlayer3Heading: TPanel
+        Left = 16
+        Top = 16
+        Width = 177
+        Height = 41
+        Caption = 'Player 3'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16

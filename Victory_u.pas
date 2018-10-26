@@ -26,7 +26,6 @@ uses Board_u;
 
 {$R *.dfm}
 
-
 procedure TFormVictory.FormShow(Sender: TObject);
 begin
   lblWinnerName.Caption := lblWinnerName.Caption + IntToStr(Winner.playerNumber) + ',';

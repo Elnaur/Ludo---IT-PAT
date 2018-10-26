@@ -1,6 +1,5 @@
 unit PlayerUnit_u;
-
-interface
+interface
 
 uses
   StdCtrls, ExtCtrls, pngimage, SysUtils, Dialogs, Forms, Graphics;
@@ -44,6 +43,7 @@ type
     AmountOfTokensHome: TLabel;
     AmountFinished: integer;
 
+    procedure StartComputerTurn;
     procedure StartDiceRoll();
     procedure FinishDiceRoll();
     procedure StartNextTurn();
@@ -68,8 +68,6 @@ begin
 end;
 
 constructor TPlayer.Create(number: integer);
-var
-  i: integer;
 const
   Red = 1;
   Yellow = 2;
@@ -308,11 +306,14 @@ begin
             CurrentSelectedToken.Position) and
           (ListOfActivePlayers[i].ListOfTokens[j] <> CurrentSelectedToken) then
         begin
-          ShowMessage('Detected token has landed on top of another one');
+          ShowMessage
+            ('Detected token has landed on top of another one. i is ' +
+              IntToStr(i) + ' and j is ' + IntToStr(j));
           for k := 0 to 3 do
           begin
-
-            if ListOfActivePlayers[i].ListOfYardSpaces[k].Picture = Nil then
+            ShowMessage('In loop');
+            if ListOfActivePlayers[i].ListOfYardSpaces[k]
+              .Picture.Graphic = Nil then
             begin
               ShowMessage('Found space to move token back to');
               ListOfActivePlayers[i].ListOfYardSpaces[k].Picture.LoadFromFile
@@ -320,8 +321,9 @@ begin
               ListOfActivePlayers[i].ListOfTokens[j].isInYard := True;
               ListOfActivePlayers[i].ListOfTokens[j].isInBoard := False;
 
-            end;
-            ShowMessage('Did not find space to move token back to');
+            end
+            else
+              ShowMessage('Did not find space to move token back to');
           end;
 
         end;
@@ -366,26 +368,24 @@ var
   i: integer;
   PossiblePosition: TImage;
 begin
-  try
+  ShowMessage('Moving token on home');
+
+  for i := 0 to 4 do
+  begin
+    if ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces[i] =
+      CurrentSelectedImageSpace then
     begin
-      for i := 0 to high(ListOfActivePlayers[CurrentPlayerIndex]
-          .ListOfHomeSpaces) do
+      if (i + lastRoll <= 4) then
       begin
-        if ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces[i] =
-          CurrentSelectedImageSpace then
-        begin
-          PossiblePosition := ListOfActivePlayers[CurrentPlayerIndex]
-            .ListOfHomeSpaces[i + lastRoll];
-        end;
+        PossiblePosition := ListOfActivePlayers[CurrentPlayerIndex]
+          .ListOfHomeSpaces[i + lastRoll];
+      end
+      else
+      begin
+        PossiblePosition := ListOfActivePlayers[CurrentPlayerIndex]
+          .ListOfHomeSpaces[4];
       end;
-
     end;
-  except
-    on E: Exception do
-    begin
-      Position := ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces[4];
-    end;
-
   end;
 
   for i := 0 to 3 do
@@ -411,15 +411,71 @@ begin
       (ListOfActivePlayers[CurrentPlayerIndex].AmountOfTokensHome.Caption, 1,
       26) + IntToStr(ListOfActivePlayers[CurrentPlayerIndex].AmountFinished);
 
-      if  ListOfActivePlayers[CurrentPlayerIndex].AmountFinished = 4 then
-        begin
-          FormBoard.Enabled := False;
-          FormRules.Enabled := False;
-          FormVictory.Show;
-        end;
+    if ListOfActivePlayers[CurrentPlayerIndex].AmountFinished = 4 then
+    begin
+      FormBoard.Enabled := False;
+      FormRules.Enabled := False;
+      FormVictory.Show;
+    end;
 
   end;
 
 end;
 
+procedure TPlayer.StartComputerTurn;
+var
+  i, j: integer;
+  CanMoveIntoYard, AllTokensAreInYard, CanMoveOnHome,
+    CanTakeAnotherToken: boolean;
+  TokenIndexToMove: integer;
+  NextIndex: integer;
+
+begin
+  Randomize;
+  CanMoveIntoYard := True;
+  AllTokensAreInYard := True;
+  CanMoveOnHome := True;
+  CanTakeAnotherToken := False;
+
+  for i := 0 to 3 do
+  begin
+    if ListOfTokens[i].isInYard = False then
+      AllTokensAreInYard := False;
+
+    if ListOfTokens[i].Position = StartSpace then
+      CanMoveIntoYard := False;
+
+    if (ListOfTokens[i].isinHome = True) and
+      (ListOfTokens[i].Position <> ListOfHomeSpaces[4]) then
+      CanMoveOnHome := True;
+
+    for j := 0 to high(ListOfBoardSpaces) do
+      if ListOfTokens[i].Position = ListOfBoardSpaces[j] then
+      begin
+        if (j + lastRoll <= high(ListOfBoardSpaces)) then
+        begin
+          NextIndex := j + lastRoll;
+        end
+        else
+        begin
+          NextIndex := lastRoll - ( high(ListOfBoardSpaces) - j) - 1;
+        end;
+        break;
+      end;
+
+    for i := 0 to 3 do
+      if CanMoveOnHome = True then
+        MoveForwardOnHome;
+
+    if (lastRoll = 6) and (ListOfTokens[i].isInYard = True) and
+      (CanMoveIntoYard = True) then
+    begin
+      ListOfTokens[i].MoveOutOfYard;
+      break;
+    end;
+  end;
+
+end;
+
 end.
+

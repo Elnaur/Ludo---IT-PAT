@@ -1,5 +1,5 @@
 unit Board_u;
-
+
 interface
 
 uses
@@ -132,7 +132,8 @@ type
     pnlPlayer3Heading: TPanel;
     lblPlayer2AmountOfTokensHome: TLabel;
     lblPlayer4AmountOfTokensHome: TLabel;
-    lblPlayer3AmountOfTokensHome: TLabel;   procedure BtnExitBoardClick(Sender: TObject);
+    lblPlayer3AmountOfTokensHome: TLabel;
+    procedure BtnExitBoardClick(Sender: TObject);
     procedure ActiveDiceButtonClick(Sender: TObject);
     procedure AssignSelectedToken(Sender: TObject);
     procedure ChooseHowToMoveToken;
@@ -155,7 +156,7 @@ type
 var
   FormBoard: TFormBoard;
 
-  Winner : TPlayer;
+  Winner: TPlayer;
 
   lastRoll: integer;
   CurrentPlayerIndex: integer;
@@ -389,14 +390,19 @@ begin
   ShuffleDice;
   lastRoll := ResultOfDiceRoll();
   lblDiceResult.Caption := IntToStr(lastRoll);
+  if ListOfActivePlayers[CurrentPlayerIndex].playerType = 'Computer' then
+    ListOfActivePlayers[CurrentPlayerIndex].StartComputerTurn
+  else
   ListOfActivePlayers[CurrentPlayerIndex].FinishDiceRoll();
 end;
 
 procedure TFormBoard.AssignSelectedToken(Sender: TObject);
 // Refered to from the on click event
 var
-  i: byte;
+  i, j: byte;
+  MoveToken: boolean;
 begin
+  MoveToken := True;
   CurrentSelectedImageSpace := Sender as TImage;
   for i := 0 to 3 do
   begin
@@ -406,10 +412,23 @@ begin
       CurrentSelectedToken := ListOfActivePlayers[CurrentPlayerIndex]
         .ListOfTokens[i];
       CurrentSelectedToken.Position := CurrentSelectedImageSpace;
-      ChooseHowToMoveToken;
-      break;
+
+      for j := 0 to 3 do
+      begin
+        if (CurrentSelectedImageSpace = ListOfActivePlayers[CurrentPlayerIndex]
+            .ListOfYardSpaces[i]) and (lastRoll <> 6) then
+        begin
+          MoveToken := False;
+        end;
+      end;
+
+      if MoveToken = True then
+        begin
+          ChooseHowToMoveToken;
+        end;
     end;
   end;
+
 end;
 
 procedure TFormBoard.ChooseHowToMoveToken();
@@ -436,7 +455,7 @@ begin
         > ListOfActivePlayers[CurrentPlayerIndex].IndexOfEnterHomeSpace) then
     begin
       if CurrentSelectedToken.timesPassedHome = 1 then
-      // Move a token on to home
+        // Move a token on to home
         CurrentSelectedToken.MoveOnToHome(lastRoll)
       else
       begin
@@ -447,10 +466,15 @@ begin
     end
     else
       CurrentSelectedToken.MoveForward(lastRoll); // Move a token on the board
+  end
+  else if CurrentSelectedToken.isInHome = True then
+  begin
+    CurrentSelectedToken.MoveForwardOnHome(lastRoll);
   end;
 
-  ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn();
+  ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn;
 
 end;
 
 end.
+

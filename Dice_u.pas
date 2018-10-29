@@ -10,7 +10,7 @@ implementation
 uses Board_u, SysUtils;
 
 var
-  lastRoll: integer;
+  diceResult: integer;
 
 const
   ListOfDiceImages: array [1 .. 7] of string = ('Dice_1.png', 'Dice_2.png',
@@ -19,7 +19,7 @@ const
 
 function ResultOfDiceRoll(): integer;
 begin
-  Result := lastRoll;
+  Result := diceResult;
 end;
 
 procedure ShuffleDice;
@@ -52,9 +52,9 @@ begin
     previousRoll := roll;
   end;
   if roll = 7 then
-    lastRoll := 6
+    diceResult := 6
   else
-    lastRoll := roll;
+    diceResult := roll;
 
   Sleep(850);
   FormBoard.imgDice.Visible := False;

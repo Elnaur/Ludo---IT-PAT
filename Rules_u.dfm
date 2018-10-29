@@ -2,8 +2,8 @@ object FormRules: TFormRules
   Left = 498
   Top = 133
   Caption = 'Rules'
-  ClientHeight = 433
-  ClientWidth = 322
+  ClientHeight = 476
+  ClientWidth = 325
   Color = clSilver
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
@@ -1220,8 +1220,8 @@ object FormRules: TFormRules
     ParentFont = False
   end
   object BtnExitRulesList: TButton
-    Left = 240
-    Top = 400
+    Left = 242
+    Top = 443
     Width = 75
     Height = 25
     Align = alCustom

@@ -1349,6 +1349,8 @@ object FormMainMenu: TFormMainMenu
     Width = 185
     Height = 65
     Caption = 'PLAY'
+    DoubleBuffered = False
+    ParentDoubleBuffered = False
     TabOrder = 5
     OnClick = BtnPlayClick
   end

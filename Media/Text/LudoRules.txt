@@ -6,24 +6,28 @@ Rules:
    tokens are staged in their yard.
 
 3. The players take turns clockwise rolling the 
-   dice. 
+   dice by clicking the 'Roll dice' button.
+   
+4. The first human player always goes first.
 
-4. If a player throws a six, a token can be moved 
-   from its home to the gametrack and the player 
-   gets another throw.
+5. To select a token to move, click on it.
 
-5. Once a token has been placed in the gametrack
+6. If a player throws a six, a token can be 
+   clicked which will be moved from its home to 
+   the gametrack and the player gets another throw.
+
+7. Once a token has been placed in the gametrack
    it can be moved according to the throw of the
    dice. If a player has more than one tokens on 
    the gametrack, the player can chose which one 
    to move.
 
-6. If the token of a player lands on the same 
+8. If the token of a player lands on the same 
    block as the token of another player, the 
    token on which was landed moves back to their
    yard.
 
-7. The tokens move once around the game track and
+9. The tokens move once around the game track and
    then up towards the centre of the board, their
    home. The aim is to get all four tokens home
    first.	

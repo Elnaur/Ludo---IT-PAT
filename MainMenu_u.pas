@@ -131,10 +131,10 @@ procedure TFormMainMenu.BtnPlayClick(Sender: TObject);
 var
   i: byte;
 begin
-  if not(((Player1TypeArray.currentIndex = 0) and
-        (Player1TypeArray.currentIndex = 0)) and
-      ((Player1TypeArray.currentIndex = 0) and
-        (Player1TypeArray.currentIndex = 0))) then
+  if (((Player1TypeArray.currentIndex = 1) or
+        (Player2TypeArray.currentIndex = 1)) or
+      ((Player3TypeArray.currentIndex = 1) or
+        (Player4TypeArray.currentIndex = 1))) then
 
   begin
     try
@@ -160,7 +160,7 @@ begin
   else
   begin
     ShowMessage
-      ('Please change at least one player type to Person or Computer.');
+      ('Please change at least one player type to Person.');
   end;
 end;
 

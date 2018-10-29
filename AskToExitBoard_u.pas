@@ -10,12 +10,10 @@ type
   TFormAskToExitBoard = class(TForm)
     LblWarningHeading: TLabel;
     BtnReturnToGame: TButton;
-    BtnExitToMainMenu: TButton;
     BtnExitToDesktop: TButton;
     LblWarningMessage1: TLabel;
     LblWarningMessage2: TLabel;
     procedure BtnReturnToGameClick(Sender: TObject);
-    procedure BtnExitToMainMenuClick(Sender: TObject);
     procedure BtnExitToDesktopClick(Sender: TObject);
 
   private
@@ -35,13 +33,6 @@ uses Board_u, MainMenu_u;
 procedure TFormAskToExitBoard.BtnReturnToGameClick(Sender: TObject);
 begin
   FormAskToExitBoard.Hide;
-end;
-
-procedure TFormAskToExitBoard.BtnExitToMainMenuClick(Sender: TObject);
-begin
-  FormAskToExitBoard.Hide;
-  FormBoard.Hide;
-  FormMainMenu.Show;
 end;
 
 procedure TFormAskToExitBoard.BtnExitToDesktopClick(Sender: TObject);

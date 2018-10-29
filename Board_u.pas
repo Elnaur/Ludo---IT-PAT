@@ -1,6 +1,5 @@
 unit Board_u;
-
-interface
+interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
@@ -137,8 +136,6 @@ type
     procedure ActiveDiceButtonClick(Sender: TObject);
     procedure AssignSelectedToken(Sender: TObject);
     procedure ChooseHowToMoveToken;
-    procedure PlayGame;
-    procedure FormShow(Sender: TObject);
 
     procedure EnableBoardSpaces(bool: boolean);
     procedure EnableRedSpaces(bool: boolean);
@@ -146,6 +143,11 @@ type
     procedure EnableYellowSpaces(bool: boolean);
     procedure EnableGreenSpaces(bool: boolean);
     procedure BtnRulesClick(Sender: TObject);
+
+    procedure HideTokenMoveHint(Sender: TObject);
+    procedure ShowTokenMoveHint(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+
   private
     { Private declarations }
   public
@@ -157,6 +159,8 @@ var
   FormBoard: TFormBoard;
 
   Winner: TPlayer;
+
+  DidSomethingWithToken: boolean;
 
   lastRoll: integer;
   CurrentPlayerIndex: integer;
@@ -189,12 +193,6 @@ end;
 procedure TFormBoard.BtnRulesClick(Sender: TObject);
 begin
   FormRules.Show;
-end;
-
-procedure TFormBoard.PlayGame();
-begin
-  CurrentPlayerIndex := 0;
-  ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
 end;
 
 procedure TFormBoard.EnableBoardSpaces(bool: boolean);
@@ -382,7 +380,15 @@ begin
   EnableYellowSpaces(False);
   EnableGreenSpaces(False);
 
-  PlayGame;
+  for i := 0 to high(ListOfActivePlayers) do
+  begin
+    if ListOfActivePlayers[i].playerType <> 'Computer' then
+    begin
+      CurrentPlayerIndex := i;
+      break;
+    end;
+  end;
+  ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
 end;
 
 procedure TFormBoard.ActiveDiceButtonClick(Sender: TObject);
@@ -390,9 +396,6 @@ begin
   ShuffleDice;
   lastRoll := ResultOfDiceRoll();
   lblDiceResult.Caption := IntToStr(lastRoll);
-  if ListOfActivePlayers[CurrentPlayerIndex].playerType = 'Computer' then
-    ListOfActivePlayers[CurrentPlayerIndex].StartComputerTurn
-  else
   ListOfActivePlayers[CurrentPlayerIndex].FinishDiceRoll();
 end;
 
@@ -411,7 +414,7 @@ begin
     begin
       CurrentSelectedToken := ListOfActivePlayers[CurrentPlayerIndex]
         .ListOfTokens[i];
-      CurrentSelectedToken.Position := CurrentSelectedImageSpace;
+      CurrentSelectedImageSpace := CurrentSelectedToken.Position;
 
       for j := 0 to 3 do
       begin
@@ -423,9 +426,9 @@ begin
       end;
 
       if MoveToken = True then
-        begin
-          ChooseHowToMoveToken;
-        end;
+      begin
+        ChooseHowToMoveToken;
+      end;
     end;
   end;
 
@@ -436,10 +439,18 @@ var
   i: integer;
 
 begin
+  DidSomethingWithToken := False;
+
   if (lastRoll = 6) and (CurrentSelectedToken.isInYard = True) then
   // Move a token from the yard to the board
   begin
-    CurrentSelectedToken.MoveOutOfYard(lastRoll);
+    if ((ListOfActivePlayers[CurrentPlayerIndex].playerType = 'Computer') and
+        (ListOfActivePlayers[CurrentPlayerIndex].StartSpace.Picture.Graphic =
+          Nil)) or (ListOfActivePlayers[CurrentPlayerIndex]
+        .playerType <> 'Computer') then
+    begin
+      CurrentSelectedToken.MoveOutOfYard;
+    end;
   end
 
   else if CurrentSelectedToken.isInBoard = True then
@@ -447,32 +458,193 @@ begin
     for i := 0 to high(ListOfBoardSpaces) do
     begin
       if ListOfBoardSpaces[i] = CurrentSelectedImageSpace then
+      begin
         indexOfImageSpace := i;
+        break;
+      end;
     end;
 
-    if (indexOfImageSpace <= ListOfActivePlayers[CurrentPlayerIndex]
-        .IndexOfEnterHomeSpace) and ((indexOfImageSpace + lastRoll)
-        > ListOfActivePlayers[CurrentPlayerIndex].IndexOfEnterHomeSpace) then
+    if ((ListOfActivePlayers[CurrentPlayerIndex].playerNumber in [1, 2, 3]) and
+        ((indexOfImageSpace <= ListOfActivePlayers[CurrentPlayerIndex]
+            .IndexOfEnterHomeSpace) and ((indexOfImageSpace + lastRoll)
+            > ListOfActivePlayers[CurrentPlayerIndex].IndexOfEnterHomeSpace)))
+      or ((ListOfActivePlayers[CurrentPlayerIndex].playerNumber = 4) and
+        (((indexOfImageSpace <= 52) and ((indexOfImageSpace + lastRoll) > 52))
+          or ((indexOfImageSpace <= 1) and ((indexOfImageSpace + lastRoll) > 1))
+        )) then // Just trust me, it works
     begin
-      if CurrentSelectedToken.timesPassedHome = 1 then
+      if CurrentSelectedToken.timesPassedHome >= 1 then
+      begin
         // Move a token on to home
-        CurrentSelectedToken.MoveOnToHome(lastRoll)
+        CurrentSelectedToken.MoveOnToHome;
+      end
       else
       begin
         CurrentSelectedToken.timesPassedHome :=
           CurrentSelectedToken.timesPassedHome + 1;
-        CurrentSelectedToken.MoveForward(lastRoll); // Move a token on the board
+        CurrentSelectedToken.MoveForward;
+        // Move a token on the board
       end;
     end
     else
-      CurrentSelectedToken.MoveForward(lastRoll); // Move a token on the board
+    begin
+      CurrentSelectedToken.MoveForward;
+      // Move a token on the board
+    end;
   end
-  else if CurrentSelectedToken.isInHome = True then
+  else if (CurrentSelectedToken.isInHome = True) and
+    (CurrentSelectedToken.isFinished = False) then
   begin
-    CurrentSelectedToken.MoveForwardOnHome(lastRoll);
+    CurrentSelectedToken.MoveForwardOnHome;
   end;
 
-  ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn;
+  if ListOfActivePlayers[CurrentPlayerIndex].playerType <> 'Computer' then
+    ListOfActivePlayers[CurrentPlayerIndex].StartNextTurn;
+
+end;
+
+procedure TFormBoard.ShowTokenMoveHint(Sender: TObject);
+var
+  imageBox: TImage;
+  i, j, k: integer;
+
+begin
+  if ListOfActivePlayers[CurrentPlayerIndex].playerType = 'Person' then
+  begin
+    imageBox := Sender as TImage;
+
+    if imageBox.Picture.Graphic <> Nil then
+    begin
+      for i := 0 to high(ListOfBoardSpaces) do
+      begin
+        if (ListOfBoardSpaces[i] = imageBox) then
+        begin
+          for j := 0 to high(ListOfActivePlayers) do
+          begin
+            for k := 0 to 3 do
+            begin
+              if (imageBox = ListOfActivePlayers[j].ListOfTokens[k].Position)
+                and (ListOfActivePlayers[j] = ListOfActivePlayers
+                  [CurrentPlayerIndex]) then
+              begin
+                ShowHint := True;
+                Hint := 'Click to move';
+                exit;
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+
+    for i := 0 to high(ListOfActivePlayers) do
+    begin
+      for j := 0 to 3 do
+      begin
+        if imageBox = ListOfActivePlayers[i].ListOfYardSpaces[j] then
+        begin
+          for k := 0 to 3 do
+          begin
+            if imageBox = ListOfActivePlayers[i].ListOfTokens[k].Position then
+            begin
+              ShowHint := True;
+              Hint := 'Click to move';
+              exit;
+            end;
+          end;
+        end;
+      end;
+    end;
+
+    for i := 0 to high(ListOfActivePlayers) do
+    begin
+      for j := 0 to 4 do
+      begin
+        if imageBox = ListOfActivePlayers[i].ListOfHomeSpaces[j] then
+        begin
+          for k := 0 to 3 do
+          begin
+            if imageBox = ListOfActivePlayers[i].ListOfTokens[k].Position then
+            begin
+              ShowHint := True;
+              Hint := 'Click to move';
+              exit;
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+
+end;
+
+procedure TFormBoard.HideTokenMoveHint(Sender: TObject);
+var
+  imageBox: TImage;
+  i, j, k: integer;
+
+begin
+  if ListOfActivePlayers[CurrentPlayerIndex].playerType = 'Person' then
+  begin
+    imageBox := Sender as TImage;
+
+    if imageBox.Picture.Graphic <> Nil then
+    begin
+      for i := 0 to high(ListOfBoardSpaces) do
+      begin
+        if (ListOfBoardSpaces[i] = imageBox) then
+        begin
+          for j := 0 to high(ListOfActivePlayers) do
+          begin
+            for k := 0 to 3 do
+            begin
+              if imageBox = ListOfActivePlayers[j].ListOfTokens[k].Position then
+              begin
+                ShowHint := False;
+                exit;
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+
+    for i := 0 to high(ListOfActivePlayers) do
+    begin
+      for j := 0 to 3 do
+      begin
+        if imageBox = ListOfActivePlayers[i].ListOfYardSpaces[j] then
+        begin
+          for k := 0 to 3 do
+          begin
+            if imageBox = ListOfActivePlayers[i].ListOfTokens[k].Position then
+            begin
+              ShowHint := False;
+              exit;
+            end;
+          end;
+        end;
+      end;
+    end;
+
+    for i := 0 to high(ListOfActivePlayers) do
+    begin
+      for j := 0 to 4 do
+      begin
+        if imageBox = ListOfActivePlayers[i].ListOfHomeSpaces[j] then
+        begin
+          for k := 0 to 3 do
+          begin
+            if imageBox = ListOfActivePlayers[i].ListOfTokens[k].Position then
+            begin
+              ShowHint := False;
+              exit;
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
 
 end;
 

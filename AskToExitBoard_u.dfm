@@ -1,8 +1,8 @@
 object FormAskToExitBoard: TFormAskToExitBoard
   Left = 498
   Top = 251
-  Caption = 'FormAskToExitBoard'
-  ClientHeight = 182
+  Caption = 'Exit Message'
+  ClientHeight = 148
   ClientWidth = 422
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -1243,22 +1243,13 @@ object FormAskToExitBoard: TFormAskToExitBoard
     TabOrder = 0
     OnClick = BtnReturnToGameClick
   end
-  object BtnExitToMainMenu: TButton
-    Left = 192
-    Top = 95
-    Width = 185
-    Height = 25
-    Caption = 'Nah, go back to main menu.'
-    TabOrder = 1
-    OnClick = BtnExitToMainMenuClick
-  end
   object BtnExitToDesktop: TButton
     Left = 192
-    Top = 126
+    Top = 94
     Width = 185
     Height = 27
     Caption = 'Exit to desktop. I'#39'm a boring person.'
-    TabOrder = 2
+    TabOrder = 1
     OnClick = BtnExitToDesktopClick
   end
 end

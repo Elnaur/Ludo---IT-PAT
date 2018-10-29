@@ -682,6 +682,7 @@ object FormBoard: TFormBoard
       Width = 209
       Height = 333
       Anchors = [akLeft]
+      ParentColor = True
       TabOrder = 0
       object lblPlayer1AmountOfTokensHome: TLabel
         Left = 16
@@ -730,6 +731,7 @@ object FormBoard: TFormBoard
       Width = 209
       Height = 333
       Anchors = [akLeft]
+      ParentColor = True
       TabOrder = 1
       object lblPlayer2AmountOfTokensHome: TLabel
         Left = 16
@@ -787,11 +789,12 @@ object FormBoard: TFormBoard
       225
       692)
     object pnlPlayer4: TPanel
-      Left = 0
-      Top = 355
+      Left = 8
+      Top = 346
       Width = 209
       Height = 333
       Anchors = [akLeft]
+      ParentColor = True
       TabOrder = 0
       object lblPlayer4AmountOfTokensHome: TLabel
         Left = 16
@@ -840,6 +843,7 @@ object FormBoard: TFormBoard
       Width = 209
       Height = 333
       Anchors = [akLeft]
+      ParentColor = True
       TabOrder = 1
       object lblPlayer3AmountOfTokensHome: TLabel
         Left = 16
@@ -2794,6 +2798,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_7: TImage
       Left = 296
@@ -2801,6 +2807,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_6: TImage
       Left = 296
@@ -2808,6 +2816,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_5: TImage
       Left = 296
@@ -2815,6 +2825,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_4: TImage
       Left = 296
@@ -2822,6 +2834,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_3: TImage
       Left = 296
@@ -2829,6 +2843,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_2: TImage
       Left = 343
@@ -2836,6 +2852,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_1: TImage
       Left = 389
@@ -2843,6 +2861,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_53: TImage
       Left = 389
@@ -2850,6 +2870,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_52: TImage
       Left = 389
@@ -2857,6 +2879,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_51: TImage
       Left = 389
@@ -2864,6 +2888,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_50: TImage
       Left = 389
@@ -2871,6 +2897,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_49: TImage
       Left = 389
@@ -2878,6 +2906,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_48: TImage
       Left = 429
@@ -2885,6 +2915,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_9: TImage
       Left = 257
@@ -2892,6 +2924,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_10: TImage
       Left = 211
@@ -2899,6 +2933,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_11: TImage
       Left = 166
@@ -2906,6 +2942,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_12: TImage
       Left = 119
@@ -2913,6 +2951,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_13: TImage
       Left = 74
@@ -2920,6 +2960,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_14: TImage
       Left = 27
@@ -2927,6 +2969,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_15: TImage
       Left = 27
@@ -2934,6 +2978,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_16: TImage
       Left = 27
@@ -2941,6 +2987,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_17: TImage
       Left = 74
@@ -2948,6 +2996,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_18: TImage
       Left = 121
@@ -2955,6 +3005,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_19: TImage
       Left = 166
@@ -2962,6 +3014,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_20: TImage
       Left = 212
@@ -2969,6 +3023,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_21: TImage
       Left = 259
@@ -2976,6 +3032,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_22: TImage
       Left = 296
@@ -2983,6 +3041,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_23: TImage
       Left = 296
@@ -2990,6 +3050,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_24: TImage
       Left = 296
@@ -2997,6 +3059,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_25: TImage
       Left = 296
@@ -3004,6 +3068,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_26: TImage
       Left = 296
@@ -3011,6 +3077,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_27: TImage
       Left = 296
@@ -3018,6 +3086,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_28: TImage
       Left = 343
@@ -3025,6 +3095,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_29: TImage
       Left = 390
@@ -3032,6 +3104,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_30: TImage
       Left = 390
@@ -3039,6 +3113,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_31: TImage
       Left = 389
@@ -3046,6 +3122,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_32: TImage
       Left = 389
@@ -3053,6 +3131,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_33: TImage
       Left = 389
@@ -3060,6 +3140,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_34: TImage
       Left = 389
@@ -3067,6 +3149,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_35: TImage
       Left = 429
@@ -3074,6 +3158,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_36: TImage
       Left = 473
@@ -3081,6 +3167,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_37: TImage
       Left = 519
@@ -3088,6 +3176,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_39: TImage
       Left = 564
@@ -3095,6 +3185,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_40: TImage
       Left = 611
@@ -3102,6 +3194,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_41: TImage
       Left = 658
@@ -3109,6 +3203,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_42: TImage
       Left = 658
@@ -3116,6 +3212,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_43: TImage
       Left = 657
@@ -3123,6 +3221,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_44: TImage
       Left = 610
@@ -3130,6 +3230,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_45: TImage
       Left = 563
@@ -3137,6 +3239,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_46: TImage
       Left = 516
@@ -3144,6 +3248,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_47: TImage
       Left = 473
@@ -3151,6 +3257,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_GreenHome5: TImage
       Left = 342
@@ -3158,6 +3266,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_GreenHome4: TImage
       Left = 342
@@ -3165,6 +3275,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_GreenHome3: TImage
       Left = 342
@@ -3172,6 +3284,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_GreenHome2: TImage
       Left = 342
@@ -3179,6 +3293,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_GreenHome1: TImage
       Left = 343
@@ -3186,6 +3302,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_YellowHome5: TImage
       Left = 246
@@ -3193,6 +3311,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_YellowHome4: TImage
       Left = 203
@@ -3200,6 +3320,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_YellowHome3: TImage
       Left = 159
@@ -3207,6 +3329,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_YellowHome2: TImage
       Left = 115
@@ -3214,6 +3338,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_YellowHome1: TImage
       Left = 72
@@ -3221,6 +3347,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_RedHome5: TImage
       Left = 342
@@ -3228,6 +3356,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_RedHome4: TImage
       Left = 343
@@ -3235,6 +3365,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_RedHome3: TImage
       Left = 342
@@ -3242,6 +3374,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_RedHome2: TImage
       Left = 342
@@ -3249,6 +3383,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_RedHome1: TImage
       Left = 342
@@ -3256,6 +3392,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_BlueHome5: TImage
       Left = 439
@@ -3263,6 +3401,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_BlueHome4: TImage
       Left = 482
@@ -3270,6 +3410,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_BlueHome3: TImage
       Left = 525
@@ -3277,6 +3419,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_BlueHome2: TImage
       Left = 568
@@ -3284,6 +3428,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_BlueHome1: TImage
       Left = 611
@@ -3291,6 +3437,8 @@ object FormBoard: TFormBoard
       Width = 41
       Height = 41
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_GreenTopLeft: TImage
       Left = 502
@@ -3300,6 +3448,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_GreenTopRight: TImage
       Left = 590
@@ -3309,6 +3459,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_GreenBottomRight: TImage
       Left = 590
@@ -3318,6 +3470,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_GreenBottomLeft: TImage
       Left = 502
@@ -3327,6 +3481,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_YellowTopRight: TImage
       Left = 182
@@ -3336,6 +3492,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_YellowBottomRight: TImage
       Left = 182
@@ -3345,6 +3503,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_YellowBottomLeft: TImage
       Left = 92
@@ -3354,6 +3514,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_YellowTopLeft: TImage
       Left = 92
@@ -3363,6 +3525,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_RedTopLeft: TImage
       Left = 95
@@ -3372,6 +3536,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_RedTopRight: TImage
       Left = 186
@@ -3381,6 +3547,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_RedBottomLeft: TImage
       Left = 95
@@ -3390,6 +3558,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_RedBottomRight: TImage
       Left = 186
@@ -3399,6 +3569,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_BlueTopLeft: TImage
       Left = 501
@@ -3408,6 +3580,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_BlueBottomLeft: TImage
       Left = 501
@@ -3419,6 +3593,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_BlueTopRight: TImage
       Left = 591
@@ -3428,6 +3604,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object imgBoardSpace_BlueBottomRight: TImage
       Left = 591
@@ -3437,6 +3615,8 @@ object FormBoard: TFormBoard
       Proportional = True
       Stretch = True
       OnClick = AssignSelectedToken
+      OnMouseEnter = ShowTokenMoveHint
+      OnMouseLeave = HideTokenMoveHint
     end
     object lblDiceResult: TLabel
       Left = 353
@@ -3445,12 +3625,15 @@ object FormBoard: TFormBoard
       Height = 28
       Align = alCustom
       Anchors = [akLeft, akTop, akRight, akBottom]
+      Color = clSilver
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
+      ParentColor = False
       ParentFont = False
+      Transparent = True
       ExplicitHeight = 29
     end
     object imgDice: TImage
@@ -3468,6 +3651,7 @@ object FormBoard: TFormBoard
     Top = 665
     Width = 72
     Height = 26
+    Hint = 'Click to exit'
     Align = alCustom
     Anchors = [akRight, akBottom]
     Caption = 'Back'
@@ -3479,6 +3663,7 @@ object FormBoard: TFormBoard
     Top = 633
     Width = 72
     Height = 26
+    Hint = 'Click to open the rules of the game'
     Caption = 'Rules'
     TabOrder = 0
     OnClick = BtnRulesClick

@@ -19,16 +19,15 @@ type
 
     constructor Create();
 
-    procedure MoveOutOfYard(rollThrown: integer);
-    procedure MoveForward(rollThrown: integer);
-    procedure MoveOnToHome(rollThrown: integer);
-    procedure MoveForwardOnHome(rollThrown: integer);
+    procedure MoveOutOfYard;
+    procedure MoveForward;
+    procedure MoveOnToHome;
+    procedure MoveForwardOnHome;
   end;
 
 type
   TPlayer = class
 
-  var
     Token1, Token2, Token3, Token4: TToken;
 
     playerType: string;
@@ -37,6 +36,7 @@ type
     ListOfYardSpaces, ListOfHomeSpaces: TImageArray;
     PanelDice: TPanel;
     ActivePanelColor: integer;
+    DarkColor: integer;
     tokenPath: string;
     playerNumber: integer;
     IndexOfEnterHomeSpace: integer;
@@ -55,7 +55,7 @@ type
 implementation
 
 uses
-  MainMenu_u, Rules_u, Board_u, Victory_u;
+  MainMenu_u, Rules_u, Board_u, Dice_u, Victory_u;
 
 constructor TToken.Create();
 begin
@@ -94,6 +94,7 @@ begin
         IndexOfEnterHomeSpace := 27;
         PanelDice := FormBoard.pnlPlayer1RollDice;
         ActivePanelColor := clRed_Board;
+        DarkColor := clDarkRed_Board;
 
         tokenPath := GetCurrentDir +
           '\Media\Token images\Red player 1 token.png';
@@ -119,6 +120,8 @@ begin
         IndexOfEnterHomeSpace := 14;
         PanelDice := FormBoard.pnlPlayer2RollDice;
         ActivePanelColor := clYellow_Board;
+        DarkColor := clDarkYellow_Board;
+
         tokenPath := GetCurrentDir +
           '\Media\Token images\Yellow player 2 token.png';
         AmountOfTokensHome := FormBoard.lblPlayer2AmountOfTokensHome;
@@ -144,6 +147,8 @@ begin
         IndexOfEnterHomeSpace := 41;
         PanelDice := FormBoard.pnlPlayer3RollDice;
         ActivePanelColor := clBlue_Board;
+        DarkColor := clDarkBlue_Board;
+
         tokenPath := GetCurrentDir +
           '\Media\Token images\Blue player 3 token.png';
         AmountOfTokensHome := FormBoard.lblPlayer3AmountOfTokensHome;
@@ -169,12 +174,15 @@ begin
         IndexOfEnterHomeSpace := 1;
         PanelDice := FormBoard.pnlPlayer4RollDice;
         ActivePanelColor := clGreen_Board;
+        DarkColor := clDarkGreen_Board;
+
         tokenPath := GetCurrentDir +
           '\Media\Token images\Green player 4 token.png';
         AmountOfTokensHome := FormBoard.lblPlayer4AmountOfTokensHome;
       end;
   end;
   AmountFinished := 0;
+  playerType := MainMenu_u.ListOfActivePlayerTypes[playerNumber];
 
   Token1 := TToken.Create;
   Token2 := TToken.Create;
@@ -230,7 +238,10 @@ begin
   else
     CurrentPlayerIndex := Low(ListOfActivePlayers);
 
-  ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
+  if ListOfActivePlayers[CurrentPlayerIndex].playerType = 'Computer' then
+    ListOfActivePlayers[CurrentPlayerIndex].StartComputerTurn
+  else
+    ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
 end;
 
 procedure TPlayer.EnablePlayerColourSpaces(bool: boolean);
@@ -247,7 +258,7 @@ begin
   end;
 end;
 
-procedure TToken.MoveOutOfYard(rollThrown: integer);
+procedure TToken.MoveOutOfYard;
 var
   i: integer;
 begin
@@ -260,15 +271,16 @@ begin
       Abort;
     end;
 
-  CurrentSelectedToken.Position.Picture := Nil;
+  CurrentSelectedToken.Position.Picture.Graphic := Nil;
   Position := ListOfActivePlayers[CurrentPlayerIndex].StartSpace;
   CurrentSelectedToken.Position.Picture.LoadFromFile
     (ListOfActivePlayers[CurrentPlayerIndex].tokenPath);
   isInYard := False;
   isInBoard := True;
+  DidSomethingWithToken := True;
 end;
 
-procedure TToken.MoveForward(rollThrown: integer);
+procedure TToken.MoveForward;
 var
   i, j, k: byte;
   PossiblePosition: TImage;
@@ -288,12 +300,17 @@ begin
     if PossiblePosition = ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens
       [i].Position then
     begin
-      ShowMessage(
-        'Please choose another token to move. The token you selected will move on to another of your tokens and you cannot do that.');
-      Abort;
+      if ListOfActivePlayers[CurrentPlayerIndex].playerType <> 'Computer' then
+      begin
+        ShowMessage(
+          'Please choose another token to move. The token you selected will move on to another of your tokens and you cannot do that.');
+        Abort;
+      end
+      else
+        exit;
     end;
 
-  Position.Picture := Nil;
+  Position.Picture.Assign(Nil);
   Position := PossiblePosition;
 
   if CurrentSelectedToken.Position <> Nil then // If there is already another token's image in it
@@ -305,25 +322,22 @@ begin
         if (ListOfActivePlayers[i].ListOfTokens[j].Position =
             CurrentSelectedToken.Position) and
           (ListOfActivePlayers[i].ListOfTokens[j] <> CurrentSelectedToken) then
+        // find which token from which player it is that the current selected token will land on
         begin
-          ShowMessage
-            ('Detected token has landed on top of another one. i is ' +
-              IntToStr(i) + ' and j is ' + IntToStr(j));
           for k := 0 to 3 do
           begin
-            ShowMessage('In loop');
             if ListOfActivePlayers[i].ListOfYardSpaces[k]
               .Picture.Graphic = Nil then
             begin
-              ShowMessage('Found space to move token back to');
               ListOfActivePlayers[i].ListOfYardSpaces[k].Picture.LoadFromFile
                 (ListOfActivePlayers[i].tokenPath);
               ListOfActivePlayers[i].ListOfTokens[j].isInYard := True;
               ListOfActivePlayers[i].ListOfTokens[j].isInBoard := False;
-
-            end
-            else
-              ShowMessage('Did not find space to move token back to');
+              ListOfActivePlayers[i].ListOfTokens[j].Position :=
+                ListOfActivePlayers[i].ListOfYardSpaces[k];
+              ListOfActivePlayers[i].ListOfTokens[j].timesPassedHome := 0;
+              break;
+            end;
           end;
 
         end;
@@ -334,10 +348,11 @@ begin
 
   CurrentSelectedToken.Position.Picture.LoadFromFile
     (ListOfActivePlayers[CurrentPlayerIndex].tokenPath);
+  DidSomethingWithToken := True;
 
 end;
 
-procedure TToken.MoveOnToHome(rollThrown: integer);
+procedure TToken.MoveOnToHome;
 var
   i: integer;
 begin
@@ -355,21 +370,20 @@ begin
 
   isInBoard := False;
   isinHome := True;
-  Position.Picture := Nil;
+  Position.Picture.Graphic := Nil;
   Position := ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces
     [lastRoll - (ListOfActivePlayers[CurrentPlayerIndex]
       .IndexOfEnterHomeSpace - indexOfImageSpace) - 1];
   Position.Picture.LoadFromFile(ListOfActivePlayers[CurrentPlayerIndex]
       .tokenPath);
+  DidSomethingWithToken := True;
 end;
 
-procedure TToken.MoveForwardOnHome(rollThrown: integer);
+procedure TToken.MoveForwardOnHome;
 var
   i: integer;
   PossiblePosition: TImage;
 begin
-  ShowMessage('Moving token on home');
-
   for i := 0 to 4 do
   begin
     if ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces[i] =
@@ -390,14 +404,20 @@ begin
 
   for i := 0 to 3 do
     if (PossiblePosition = ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens
-        [i].Position) and (isFinished = False) then
+        [i].Position) and (PossiblePosition <> ListOfActivePlayers
+        [CurrentPlayerIndex].ListOfHomeSpaces[4]) then
     begin
-      ShowMessage(
-        'Please choose another token to move. The token you selected will move on to another of your tokens and you cannot do that.');
-      Abort;
+      if ListOfActivePlayers[CurrentPlayerIndex].playerType <> 'Computer' then
+      begin
+        ShowMessage(
+          'Please choose another token to move. The token you selected will move on to another of your tokens and you cannot do that.');
+        Abort;
+      end
+      else
+        exit;
     end;
 
-  Position.Picture := Nil;
+  Position.Picture.Graphic := Nil;
   Position := PossiblePosition;
   Position.Picture.LoadFromFile(ListOfActivePlayers[CurrentPlayerIndex]
       .tokenPath);
@@ -407,73 +427,59 @@ begin
     isFinished := True;
     ListOfActivePlayers[CurrentPlayerIndex].AmountFinished :=
       ListOfActivePlayers[CurrentPlayerIndex].AmountFinished + 1;
+
     ListOfActivePlayers[CurrentPlayerIndex].AmountOfTokensHome.Caption := copy
       (ListOfActivePlayers[CurrentPlayerIndex].AmountOfTokensHome.Caption, 1,
       26) + IntToStr(ListOfActivePlayers[CurrentPlayerIndex].AmountFinished);
 
     if ListOfActivePlayers[CurrentPlayerIndex].AmountFinished = 4 then
     begin
+      Winner := ListOfActivePlayers[CurrentPlayerIndex];
       FormBoard.Enabled := False;
       FormRules.Enabled := False;
       FormVictory.Show;
     end;
 
   end;
+  DidSomethingWithToken := True;
 
 end;
 
 procedure TPlayer.StartComputerTurn;
 var
   i, j: integer;
-  CanMoveIntoYard, AllTokensAreInYard, CanMoveOnHome,
-    CanTakeAnotherToken: boolean;
-  TokenIndexToMove: integer;
-  NextIndex: integer;
+  ListOfIndexes: array [0 .. 3] of integer;
+  tmp: integer;
 
 begin
-  Randomize;
-  CanMoveIntoYard := True;
-  AllTokensAreInYard := True;
-  CanMoveOnHome := True;
-  CanTakeAnotherToken := False;
+  PanelDice.Color := ActivePanelColor;
+  ShuffleDice;
+  lastRoll := ResultOfDiceRoll;
 
   for i := 0 to 3 do
   begin
-    if ListOfTokens[i].isInYard = False then
-      AllTokensAreInYard := False;
-
-    if ListOfTokens[i].Position = StartSpace then
-      CanMoveIntoYard := False;
-
-    if (ListOfTokens[i].isinHome = True) and
-      (ListOfTokens[i].Position <> ListOfHomeSpaces[4]) then
-      CanMoveOnHome := True;
-
-    for j := 0 to high(ListOfBoardSpaces) do
-      if ListOfTokens[i].Position = ListOfBoardSpaces[j] then
-      begin
-        if (j + lastRoll <= high(ListOfBoardSpaces)) then
-        begin
-          NextIndex := j + lastRoll;
-        end
-        else
-        begin
-          NextIndex := lastRoll - ( high(ListOfBoardSpaces) - j) - 1;
-        end;
-        break;
-      end;
-
-    for i := 0 to 3 do
-      if CanMoveOnHome = True then
-        MoveForwardOnHome;
-
-    if (lastRoll = 6) and (ListOfTokens[i].isInYard = True) and
-      (CanMoveIntoYard = True) then
-    begin
-      ListOfTokens[i].MoveOutOfYard;
-      break;
-    end;
+    ListOfIndexes[i] := i;
   end;
+
+  for i := high(ListOfIndexes) downto 1 do // Shuffle array using Fisher-Yates algorithm
+  begin
+    j := random(i + 1);
+
+    tmp := ListOfIndexes[i];
+    ListOfIndexes[i] := ListOfIndexes[j];
+    ListOfIndexes[j] := tmp;
+
+  end;
+
+  for i := 0 to 3 do
+  begin
+    CurrentSelectedToken := ListOfTokens[ListOfIndexes[i]];
+    CurrentSelectedImageSpace := CurrentSelectedToken.Position;
+    FormBoard.ChooseHowToMoveToken;
+    if DidSomethingWithToken = True then
+      break;
+  end;
+  StartNextTurn;
 
 end;
 

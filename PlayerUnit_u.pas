@@ -9,6 +9,8 @@ type
 
 type
   TToken = class
+    // Class that holds a token and its properties and mothods, so that each token can move
+    // individually
     Position: TImage;
 
     isinHome: boolean;
@@ -27,6 +29,9 @@ type
 
 type
   TPlayer = class
+    // Class that holds a player and its properties so that the system can remember
+    // which player's turn it is as well as which dice panel, which tokens, etc
+    // belong to which player.
 
     Token1, Token2, Token3, Token4: TToken;
 
@@ -77,6 +82,7 @@ const
 begin
   playerNumber := number;
   case playerNumber of
+    // Assigns properties based on which player number it is
     Red:
       begin
         ListOfYardSpaces := TImageArray.Create
@@ -181,6 +187,7 @@ begin
         AmountOfTokensHome := FormBoard.lblPlayer4AmountOfTokensHome;
       end;
   end;
+
   AmountFinished := 0;
   playerType := MainMenu_u.ListOfActivePlayerTypes[playerNumber];
 
@@ -196,6 +203,7 @@ begin
 end;
 
 procedure TPlayer.StartDiceRoll();
+// Allows user to roll the dice
 begin
   PanelDice.Color := ActivePanelColor;
   PanelDice.Enabled := True;
@@ -206,22 +214,19 @@ begin
   PanelDice.Enabled := False;
   if lastRoll <> 6 then
   begin
-    if ((Token1.isInYard = True) and (Token2.isInYard = True)) and
-      ((Token3.isInYard = True) and (Token4.isInYard = True)) then
+    if (((Token1.isInYard = True) and (Token2.isInYard = True)) and
+        ((Token3.isInYard = True) and (Token4.isInYard = True))) then
     // if all tokens are still in their Yard and the throw is not six
     begin
-      // ShowMessage('all tokens are still in their Yard and the throw is not six');
       StartNextTurn;
     end
     else // one of the tokens is out and the roll is not six
     begin
-      // Showmessage('one of the tokens is out and the roll is not six');
       EnablePlayerColourSpaces(True);
     end;
   end
   else // the roll is six, so it does not matter if tokens are out or not
   begin
-    // ShowMessage('the roll is six, so it does not matter if tokens are out or not');
     EnablePlayerColourSpaces(True);
   end;
 
@@ -234,6 +239,7 @@ begin
   FormBoard.lblDiceResult.Caption := '';
 
   if CurrentPlayerIndex < High(ListOfActivePlayers) then
+    // Moves the current player one on
     CurrentPlayerIndex := CurrentPlayerIndex + 1
   else
     CurrentPlayerIndex := Low(ListOfActivePlayers);
@@ -287,7 +293,7 @@ var
 begin
 
   for i := 0 to high(ListOfBoardSpaces) do
-  begin
+  begin // Checks if the token needs to be moved around the ListOfBoardSpaces array and back to element 1
     if ListOfBoardSpaces[i] = CurrentSelectedImageSpace then
       if (i + lastRoll) <= high(ListOfBoardSpaces) then
         PossiblePosition := ListOfBoardSpaces[i + lastRoll]
@@ -298,7 +304,7 @@ begin
 
   for i := 0 to 3 do
     if PossiblePosition = ListOfActivePlayers[CurrentPlayerIndex].ListOfTokens
-      [i].Position then
+      [i].Position then // Checks if the token isn't going to land on another of the player's tokens
     begin
       if ListOfActivePlayers[CurrentPlayerIndex].playerType <> 'Computer' then
       begin
@@ -361,7 +367,7 @@ begin
     if (ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces[lastRoll -
         (ListOfActivePlayers[CurrentPlayerIndex].IndexOfEnterHomeSpace -
           indexOfImageSpace) - 1] = CurrentSelectedToken.Position) and
-      (isFinished = False) then
+      (isFinished = False) then // Checks if the token isn't going to land on another of the same player's tokens
     begin
       ShowMessage(
         'Please choose another token to move. The token you selected will move on to another of your tokens and you cannot do that.');
@@ -371,9 +377,33 @@ begin
   isInBoard := False;
   isinHome := True;
   Position.Picture.Graphic := Nil;
-  Position := ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces
-    [lastRoll - (ListOfActivePlayers[CurrentPlayerIndex]
-      .IndexOfEnterHomeSpace - indexOfImageSpace) - 1];
+
+  // Checks if the token can move on to home.
+  // The amount of if statements is because there are many different
+  // sconditions relating to the different players.
+  if ListOfActivePlayers[CurrentPlayerIndex].playerNumber <> 4 then
+  begin
+    Position := ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces
+      [lastRoll - (ListOfActivePlayers[CurrentPlayerIndex]
+        .IndexOfEnterHomeSpace - indexOfImageSpace) - 1];
+  end
+  else
+  begin
+    if ((indexOfImageSpace <= 52) and ((indexOfImageSpace + lastRoll) > 52))
+      then
+    begin
+      Position := ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces
+        [lastRoll - (( high(ListOfBoardSpaces) - indexOfImageSpace) + 2) - 1]
+    end
+    else if ((indexOfImageSpace <= 1) and ((indexOfImageSpace + lastRoll) > 1))
+      then
+    begin
+      Position := ListOfActivePlayers[CurrentPlayerIndex].ListOfHomeSpaces
+        [lastRoll - (ListOfActivePlayers[CurrentPlayerIndex]
+          .IndexOfEnterHomeSpace - indexOfImageSpace) - 1]
+    end;
+  end;
+
   Position.Picture.LoadFromFile(ListOfActivePlayers[CurrentPlayerIndex]
       .tokenPath);
   DidSomethingWithToken := True;

@@ -3622,7 +3622,7 @@ object FormBoard: TFormBoard
       Left = 353
       Top = 332
       Width = 7
-      Height = 28
+      Height = 29
       Align = alCustom
       Anchors = [akLeft, akTop, akRight, akBottom]
       Color = clSilver
@@ -3634,7 +3634,6 @@ object FormBoard: TFormBoard
       ParentColor = False
       ParentFont = False
       Transparent = True
-      ExplicitHeight = 29
     end
     object imgDice: TImage
       Left = 305

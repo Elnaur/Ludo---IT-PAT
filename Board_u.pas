@@ -437,6 +437,7 @@ end;
 procedure TFormBoard.ChooseHowToMoveToken();
 var
   i: integer;
+  canMove: boolean;
 
 begin
   DidSomethingWithToken := False;
@@ -503,6 +504,9 @@ begin
 
 end;
 
+
+// The following procedures are very similar and show or hide hints ('Click to move token')
+// when the user's mouse pointer hovers over a token of a active player
 procedure TFormBoard.ShowTokenMoveHint(Sender: TObject);
 var
   imageBox: TImage;

@@ -26,7 +26,6 @@ var
 implementation
 
 uses Board_u;
-
 {$R *.dfm}
 
 procedure TFormVictory.btnExitClick(Sender: TObject);
@@ -36,7 +35,11 @@ end;
 
 procedure TFormVictory.FormShow(Sender: TObject);
 begin
-  lblWinnerName.Caption := lblWinnerName.Caption + IntToStr(Winner.playerNumber) + ',';
+  left := (Screen.Width div 2) - (FormBoard.Width div 2);
+  top := (Screen.WorkAreaHeight div 2) - (FormBoard.Height div 2);
+
+  lblWinnerName.Caption := lblWinnerName.Caption + IntToStr
+    (Winner.playerNumber) + ',';
   pnlYouWon.Color := Winner.ActivePanelColor;
   Color := Winner.DarkColor;
 end;

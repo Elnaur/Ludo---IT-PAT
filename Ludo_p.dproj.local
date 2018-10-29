@@ -24,12 +24,15 @@
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="AskToExitBoard_u.pas"/>
+    <File Path="AskToExitBoard_u.dfm"/>
     <File Path="Board_u.pas"/>
     <File Path="Board_u.dfm"/>
     <File Path="Dice_u.pas"/>
     <File Path="MainMenu_u.pas"/>
+    <File Path="MainMenu_u.dfm"/>
     <File Path="PlayerUnit_u.pas"/>
     <File Path="Rules_u.pas"/>
+    <File Path="Rules_u.dfm"/>
     <File Path="Victory_u.pas"/>
     <File Path="Victory_u.dfm"/>
   </ProjectSortOrder>

@@ -239,7 +239,7 @@ begin
     CurrentPlayerIndex := Low(ListOfActivePlayers);
 
   if ListOfActivePlayers[CurrentPlayerIndex].playerType = 'Computer' then
-    ListOfActivePlayers[CurrentPlayerIndex].StartComputerTurn
+    ListOfActivePlayers[CurrentPlayerIndex].StartComputerTurn()
   else
     ListOfActivePlayers[CurrentPlayerIndex].StartDiceRoll();
 end;
@@ -436,7 +436,7 @@ begin
     begin
       Winner := ListOfActivePlayers[CurrentPlayerIndex];
       FormBoard.Enabled := False;
-      FormRules.Enabled := False;
+      FormRules.Hide;
       FormVictory.Show;
     end;
 
